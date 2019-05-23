@@ -1,0 +1,8 @@
+✔ Add capability to connect to Twitch API/events @created(Thu 05/23/2019 - 12:30 AM) @done(19-05-23 00:31)
+☐ Implement initialization of stream notes file from template @created(Thu 05/23/2019 - 12:31 AM)
+  ☐ Determine markdown parsing/writing module to use @created(Thu 05/23/2019 - 12:32 AM)
+  ☐ Use markdown parser module to read from template.md @created(Thu 05/23/2019 - 12:32 AM)
+  ☐ Write new file for stream notes using the parsed template @created(Thu 05/23/2019 - 12:33 AM)
+☐ Determine approach for finding event sections (such as "Followers") and appending to them @created(Thu 05/23/2019 - 12:34 AM)
+  ☐ Add functions in `files.js` to append events to the stream notes @created(Thu 05/23/2019 - 12:35 AM)
+  ☐ Call those functions when events are received in `events-listener.js` @created(Thu 05/23/2019 - 12:36 AM)
