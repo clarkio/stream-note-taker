@@ -3,4 +3,4 @@ let files = require('./files');
 
 files.initTodaysStreamNotes();
 
-// eventsListener.start();
+eventsListener.start();

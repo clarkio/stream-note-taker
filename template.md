@@ -1,11 +1,13 @@
+# Stream Notes - <%=DayName%> - <%=Month%> <%=Day%>, <%=Year%>
+
 <img src=""/>
 
-# {stream title}
+## <%=StreamTitle%>
 
 ## Stream Replay
 
-- [Twitch]({twitch stream url})
-- [YouTube]({youtube recording url})
+- [Twitch](<%=TwitchUrl%>)
+- [YouTube](<%=YouTubeUrl%>)
 
 ## Goals
 
@@ -29,7 +31,7 @@
 
 ## Clips
 
-- [{clip title/description}]({clip url}) `by @{username}`
+- [<%=ClipTitle%>](<%=ClipUrl%>) `by @<%={username%>}`
 
 ## Other topics discussed/covered
 
@@ -37,7 +39,7 @@
 
 ## Idea's Sparked by Today's Stream
 
-- ([@{username}](https://twitch.tv/{username})) {idea}
+- ([@<%=username%>](https://twitch.tv/<%=username%>)) <%=idea%>
 
 ## Things we learned
 
@@ -49,7 +51,7 @@
 
 ## Community PR's
 
-- ([@{username}](https://github.com/{username})): [https://github.com/clarkio/{pr}](https://github.com/clarkio/{pr})
+- ([@<%=username%>](https://github.com/<%=username%>)): [https://github.com/clarkio/{pr}](https://github.com/clarkio/{pr})
 
 ## Clips
 
@@ -57,20 +59,20 @@
 
 ### Raiders/Hosts
 
-- [{username}](https://twitch.tv/{username}): {raider count}
+- [<%=username%>](https://twitch.tv/<%=username%>): <%=RaidCount%>
 
 ### Subscribers
 
-- [{username}](https://twitch.tv/{username}) ({# months})
-- [{username}](https://twitch.tv/{username}) ({# months}) `gifted by` [{username}](https://twitch.tv/{username})
+- [<%=username%>](https://twitch.tv/<%=username%>) (<%=SubscribeMonths%>)
+- [<%=username%>](https://twitch.tv/<%=username%>) (<%=SubscribeMonths%>) `gifted by` [<%=username%>](https://twitch.tv/<%=username%>)
 
 ### Cheerers
 
-- [{username}](https://twitch.tv/{username}): {bit count}
+- [<%=username%>](https://twitch.tv/<%=username%>): <%=BitCount%>
 
 ### Followers
 
-- [{username}](https://twitch.tv/{username})
+- [<%=username%>](https://twitch.tv/<%=username%>)
 
 ## Get Connected with Clarkio
 
