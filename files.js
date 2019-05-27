@@ -1,40 +1,43 @@
-let fs = require('fs');
+const fs = require('fs');
 require('dotenv').config();
-let moment = require('moment');
-let _template = require('lodash.template');
-let markdownIt = require('markdown-it');
-let md = markdownIt();
+const moment = require('moment');
+const _template = require('lodash.template');
+const markdownIt = require('markdown-it');
+
+const md = markdownIt();
 
 // TODO: change this back to use the env variable
-let uri = './'; //process.env.WORKING_DIRECTORY;
-let today = moment();
-let todayDate = moment().format('YYYY-MM-DD');
-let fileName = `${todayDate}.md`;
-let fullUri = `${uri}${fileName}`;
-let templateFileName = `template.md`;
-let fullTemplateUri = `${uri}${templateFileName}`;
+const uri = './'; // process.env.WORKING_DIRECTORY;
+const today = moment();
+const todayDate = moment().format('YYYY-MM-DD');
+const finaleFileName = `${todayDate}.md`;
+const fullUri = `${uri}${finaleFileName}`;
+const templateFileName = 'template.md';
+const fullTemplateUri = `${uri}${templateFileName}`;
 
 module.exports = {
   initTodaysStreamNotes,
-  addFollower
+  addFollower,
 };
 
 function initTodaysStreamNotes() {
   let todaysStreamNotesContent = '';
   // 1. read the markdown from the template
   // 2. write that markdown to a new file for today's stream
-  let templateContents = fs.readFileSync(fullTemplateUri, { encoding: 'utf8' });
-  let temp = md.parseInline(templateContents, {});
+  const templateContents = fs.readFileSync(fullTemplateUri, {
+    encoding: 'utf8',
+  });
+  const temp = md.parseInline(templateContents, {});
   temp[0].children.forEach(token => {
     switch (token.type) {
       case 'text': {
         if (token.content.includes('Stream Notes')) {
-          let compiled = _template(token.content);
-          let header = compiled({
+          const compiled = _template(token.content);
+          const header = compiled({
             DayName: today.format('dddd'),
             Month: today.format('MMMM'),
             Day: today.format('DD'),
-            Year: today.format('YYYY')
+            Year: today.format('YYYY'),
           });
           console.log(header);
           todaysStreamNotesContent += header;
@@ -48,6 +51,9 @@ function initTodaysStreamNotes() {
         todaysStreamNotesContent += '\n';
         break;
       }
+
+      default:
+        break;
     }
   });
   console.dir(temp[0].children);
@@ -57,7 +63,7 @@ function initTodaysStreamNotes() {
 function addFollower(username) {
   console.log(todayDate);
 
-  let followerEntry = `- [@${{ username }}](https://twitch.tv/${{ username }})`;
+  const followerEntry = `- [@${username}](https://twitch.tv/${username})`;
 
   // return fs.writeFileSync(fullUri, followerEntry);
 }

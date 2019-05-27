@@ -1,59 +1,78 @@
 require('dotenv').config();
-let io = require('socket.io-client');
 
-let files = require('./files');
-let accessToken = process.env.SE_TOKEN;
-let socket;
+const streamElementsSocket = require('./streamelements-socket');
+const files = require('./files');
+const sessionData = require('./data');
 
 module.exports = {
-  start
+  start,
+  getSessionData,
+  onEvent,
+  onEventTest,
+  onSessionReset,
+  _testEvent,
 };
 
 function start() {
-  socket = io('https://realtime.streamelements.com', {
-    transports: ['websocket']
-  });
-
-  // Socket connected
-  socket.on('connect', onConnect);
-
-  // Socket got disconnected
-  socket.on('disconnect', onDisconnect);
-
-  // Socket is authenticated
-  socket.on('authenticated', onAuthenticated);
-
-  // New event received
-  socket.on('event', onEvent);
+  // We pass in 'this' context so when events are received they will be passed to this module for handling
+  streamElementsSocket.connect(this);
 }
 
-function onConnect() {
-  console.log('Successfully connected to the websocket');
-
-  socket.emit('authenticate', { method: 'jwt', token: accessToken });
+function getSessionData() {
+  return sessionData.getAllData();
 }
 
-function onDisconnect() {
-  console.log('Disconnected from websocket');
-  // Reconnect
-}
-
-function onAuthenticated(data) {
-  const { channelId } = data;
-
-  console.log(`Successfully connected to channel ${channelId}`);
-
-  // Use the following to manually trigger events for testing
-  // onEvent({ type: 'follow', data: { username: 'test' } });
-}
-
+// https://github.com/StreamElements/widgets/blob/master/CustomCode.md#on-event
 function onEvent(event) {
-  // Deal with events
-  console.log('An event was triggered');
-  console.dir(event);
+  console.log(`An event was triggered: ${event.type}`);
 
   // Event types to check for can be found here: https://developers.streamelements.com/endpoints/activities
-  if (event.type === 'follow') {
-    files.addFollower(event.data.username);
+  switch (event.type) {
+    case 'follow':
+      sessionData.addFollower(event.data.username);
+      break;
+    case 'subscriber': {
+      determineSubscriberEventType(event);
+      break;
+    }
+    case 'cheer':
+      sessionData.addCheerer(event.data.username, event.data.amount);
+      break;
+    case 'raid':
+      sessionData.addRaider(
+        event.data.username,
+        event.data.amount,
+        event.data.amount
+      );
+      break;
+    default:
+      break;
   }
+}
+
+function determineSubscriberEventType(event) {
+  if (event.data.sender) {
+    sessionData.addGiftedSubscriber(
+      event.data.username,
+      event.data.amount,
+      event.data.sender
+    );
+  } else {
+    sessionData.addSubscriber(event.data.username, event.data.amount);
+  }
+}
+
+function onSessionReset(resetData) {
+  console.log('***Session:Reset event captured***');
+  console.dir(resetData);
+  // If this means the stream ends we can finish tracking events and do a final write to this session's stream notes file
+}
+
+function onEventTest(event) {
+  console.dir('Received Test Event', event);
+  onEvent(event);
+}
+
+function _testEvent(eventType) {
+  streamElementsSocket._testEvent(eventType);
 }

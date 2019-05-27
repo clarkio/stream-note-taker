@@ -1,0 +1,91 @@
+{
+  "follow": {
+    "data": {
+      "username": "FollowerSampleUser",
+      "providerId": "106189190",
+      "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/3dead2e5415d42ee-profile_image-300x300.png",
+      "items": []
+    },
+    "provider": "twitch",
+    "_id": "5ce97b9e85e18830dfdae1e9",
+    "channel": "5a7fdb049693a100011257a2",
+    "type": "follow",
+    "createdAt": "2019-05-25T17:30:06.458Z"
+  },
+  "subscriber": {
+    "data": {
+      "username": "SubscriberSampleUser",
+      "providerId": "",
+      "amount": 2,
+      "tier": "1000",
+      "items": [],
+      "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/20bd3f0a-ce68-4f5c-a9bf-f61b950be3d2-profile_image-300x300.png"
+    },
+    "provider": "twitch",
+    "_id": "5ce846875acdde603a889b4d",
+    "channel": "5a7fdb049693a100011257a2",
+    "type": "subscriber",
+    "createdAt": "2019-05-24T19:31:19.673Z"
+  },
+  "gifted-subscriber": {
+    "data": {
+      "username": "GiftedSubscriberSampleUsername",
+      "providerId": "",
+      "amount": 1,
+      "tier": "1000",
+      "gifted": true,
+      "sender": "GifterSampleUsername",
+      "message": "GifterSampleUsername gifted a Tier 1 sub to GiftedSubscriberSampleUsername!",
+      "items": [],
+      "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/b56315f180244790-profile_image-300x300.png"
+    },
+    "provider": "twitch",
+    "_id": "5ce822387ca433e503e2230f",
+    "channel": "5a7fdb049693a100011257a2",
+    "type": "subscriber",
+    "createdAt": "2019-05-24T16:56:24.806Z"
+  },
+  "cheer": {
+    "data": {
+      "username": "CheerSampleUSer",
+      "providerId": "",
+      "amount": 100,
+      "message": "cheer100 great stream today!",
+      "items": [],
+      "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/5add1dfb-d29d-40e0-8030-0b021533ad4c-profile_image-300x300.png"
+    },
+    "provider": "twitch",
+    "_id": "5ce846ac9610b4c5dd611f3d",
+    "channel": "5a7fdb049693a100011257a2",
+    "type": "cheer",
+    "createdAt": "2019-05-24T19:31:56.338Z"
+  },
+  "host": {
+    "data": {
+      "username": "HostSampleUser",
+      "providerId": "",
+      "amount": 15,
+      "items": [],
+      "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/jesseskinner-profile_image-792db2f2190e1523-300x300.jpeg"
+    },
+    "provider": "twitch",
+    "_id": "5ce840d86fbe116042fc01e5",
+    "channel": "5a7fdb049693a100011257a2",
+    "type": "host",
+    "createdAt": "2019-05-24T19:07:04.811Z"
+  },
+  "raid": {
+    "data": {
+      "username": "RaidSampleUser",
+      "providerId": "",
+      "amount": 17,
+      "items": [],
+      "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/jesseskinner-profile_image-792db2f2190e1523-300x300.jpeg"
+    },
+    "provider": "twitch",
+    "_id": "5ce840d8fc84b064c8a1a670",
+    "channel": "5a7fdb049693a100011257a2",
+    "type": "raid",
+    "createdAt": "2019-05-24T19:07:04.783Z"
+  }
+}

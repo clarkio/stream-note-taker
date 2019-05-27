@@ -6,3 +6,10 @@
 ☐ Determine approach for finding event sections (such as "Followers") and appending to them @created(Thu 05/23/2019 - 12:34 AM)
   ☐ Add functions in `files.js` to append events to the stream notes @created(Thu 05/23/2019 - 12:35 AM)
   ☐ Call those functions when events are received in `events-listener.js` @created(Thu 05/23/2019 - 12:36 AM)
+
+
+NOTES:
+clarkio user_id = 81844533
+Determined from GET  https://api.twitch.tv/helix/users?login=clarkio
+
+hub.topic URL https://api.twitch.tv/helix/streams?user_id=81844533

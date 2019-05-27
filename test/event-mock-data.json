@@ -1,0 +1,48 @@
+{
+  "follow": {
+    "type": "follow",
+    "data": {
+      "username": "test-follower"
+    }
+  },
+  "subscriber": {
+    "type": "subscriber",
+    "data": {
+      "username": "SubscriberSampleUser",
+      "providerId": "",
+      "amount": 2
+    }
+  },
+  "giftedSubscriber": {
+    "type": "subscriber",
+    "data": {
+      "username": "GiftedSubscriberSampleUsername",
+      "amount": 1,
+      "gifted": true,
+      "sender": "GifterSampleUsername",
+      "message": "GifterSampleUsername gifted a Tier 1 sub to GiftedSubscriberSampleUsername!"
+    }
+  },
+  "cheer": {
+    "data": {
+      "username": "CheerSampleUSer",
+      "amount": 100,
+      "message": "cheer100 great stream today!"
+    },
+    "type": "cheer"
+  },
+  "host": {
+    "data": {
+      "username": "HostSampleUser",
+      "amount": 15
+    },
+    "type": "host"
+  },
+  "raid": {
+    "data": {
+      "username": "RaidSampleUser",
+      "amount": 17
+    },
+    "type": "raid"
+  }
+}
