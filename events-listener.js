@@ -9,7 +9,6 @@ module.exports = {
   getSessionData,
   onEvent,
   onEventTest,
-  onSessionReset,
   _testEvent,
 };
 
@@ -60,12 +59,6 @@ function determineSubscriberEventType(event) {
   } else {
     sessionData.addSubscriber(event.data.username, event.data.amount);
   }
-}
-
-function onSessionReset(resetData) {
-  console.log('***Session:Reset event captured***');
-  console.dir(resetData);
-  // If this means the stream ends we can finish tracking events and do a final write to this session's stream notes file
 }
 
 function onEventTest(event) {
