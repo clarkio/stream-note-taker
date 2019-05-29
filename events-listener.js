@@ -23,8 +23,6 @@ function getSessionData() {
 
 // https://github.com/StreamElements/widgets/blob/master/CustomCode.md#on-event
 function onEvent(event) {
-  console.log(`An event was triggered: ${event.type}`);
-
   // Event types to check for can be found here: https://developers.streamelements.com/endpoints/activities
   switch (event.type) {
     case 'follow':

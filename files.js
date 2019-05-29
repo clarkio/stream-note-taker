@@ -15,6 +15,11 @@ const fullUri = `${uri}${finaleFileName}`;
 const templateFileName = 'template.md';
 const fullTemplateUri = `${uri}${templateFileName}`;
 
+const followersHeader = '### Followers\n\n\n';
+const subscribersHeader = '### Subscribers\n\n\n';
+const cheerersHeader = '### Cheerers\n\n\n';
+const raidersHeader = '### Raiders/Hosts\n\n\n';
+
 module.exports = {
   initTodaysStreamNotes,
   addFollower,

@@ -7,92 +7,105 @@ const eventsListener = require('../events-listener');
 const eventsMockData = require('./event-mock-data.json');
 const streamElementsSocket = require('../streamelements-socket');
 
-describe('Connection', function() {
-  it('should use streamelements socket to start connection', function(done) {
-    // Arrange
-    const stub = sinon.stub(streamElementsSocket);
+describe('Events Listener', function() {
+  describe('Connection', function() {
+    it('should use streamelements socket to start connection', function(done) {
+      // Arrange
+      const stub = sinon.stub(streamElementsSocket);
 
-    // Act
-    eventsListener.start();
+      // Act
+      eventsListener.start();
 
-    // Assert
-    expect(stub.connect.calledOnce).to.be.true;
-    done();
-  });
-});
-
-describe('Other Uncategorized Members to Test', function() {
-  it('should call sessionData function once to retrieve all data', function(done) {
-    // Arrange
-    const stub = sinon.stub(sessionData, 'getAllData');
-
-    // Act
-    eventsListener.getSessionData();
-
-    // Assert
-    expect(stub.calledOnce).to.be.true;
-    done();
-  });
-});
-
-describe('Twitch Alerts', function() {
-  it('should add follower to session data on follow event', function(done) {
-    // Arrange
-    const stub = sinon.stub(sessionData, 'addFollower');
-
-    // Act
-    eventsListener.onEvent(eventsMockData.follow);
-
-    // Assert
-    expect(stub.calledOnce).to.be.true;
-    done();
+      // Assert
+      expect(stub.connect.calledOnce).to.be.true;
+      done();
+    });
   });
 
-  it('should add subscriber to session data on subscribe event', function(done) {
-    // Arrange
-    const stub = sinon.stub(sessionData, 'addSubscriber');
+  describe('Other Uncategorized Members to Test', function() {
+    it('should call sessionData function once to retrieve all data', function(done) {
+      // Arrange
+      const stub = sinon.stub(sessionData, 'getAllData');
 
-    // Act
-    eventsListener.onEvent(eventsMockData.subscriber);
+      // Act
+      eventsListener.getSessionData();
 
-    // Assert
-    expect(stub.calledOnce).to.be.true;
-    done();
+      // Assert
+      expect(stub.calledOnce).to.be.true;
+      done();
+    });
   });
 
-  it('should add gifted subscriber to session data on gifted subscribe event', function(done) {
-    // Arrange
-    const stub = sinon.stub(sessionData, 'addGiftedSubscriber');
+  describe('Twitch Alerts', function() {
+    it.only('should do nothing on unsupported event', function(done) {
+      // Arrange
+      const stub = sinon.stub(sessionData);
 
-    // Act
-    eventsListener.onEvent(eventsMockData.giftedSubscriber);
+      // Act
+      eventsListener.onEvent(eventsMockData.follow);
 
-    // Assert
-    expect(stub.calledOnce).to.be.true;
-    done();
-  });
+      // Assert
+      expect(stub.called).to.be.equal(0);
+      done();
+    });
+    it('should add follower to session data on follow event', function(done) {
+      // Arrange
+      const stub = sinon.stub(sessionData, 'addFollower');
 
-  it('should add cheerer to session data on cheer event', function(done) {
-    // Arrange
-    const stub = sinon.stub(sessionData, 'addCheerer');
+      // Act
+      eventsListener.onEvent(eventsMockData.follow);
 
-    // Act
-    eventsListener.onEvent(eventsMockData.cheer);
+      // Assert
+      expect(stub.calledOnce).to.be.true;
+      done();
+    });
 
-    // Assert
-    expect(stub.calledOnce).to.be.true;
-    done();
-  });
+    it('should add subscriber to session data on subscribe event', function(done) {
+      // Arrange
+      const stub = sinon.stub(sessionData, 'addSubscriber');
 
-  it('should add raider to session data on raid event', function(done) {
-    // Arrange
-    const stub = sinon.stub(sessionData, 'addRaider');
+      // Act
+      eventsListener.onEvent(eventsMockData.subscriber);
 
-    // Act
-    eventsListener.onEvent(eventsMockData.raid);
+      // Assert
+      expect(stub.calledOnce).to.be.true;
+      done();
+    });
 
-    // Assert
-    expect(stub.calledOnce).to.be.true;
-    done();
+    it('should add gifted subscriber to session data on gifted subscribe event', function(done) {
+      // Arrange
+      const stub = sinon.stub(sessionData, 'addGiftedSubscriber');
+
+      // Act
+      eventsListener.onEvent(eventsMockData.giftedSubscriber);
+
+      // Assert
+      expect(stub.calledOnce).to.be.true;
+      done();
+    });
+
+    it('should add cheerer to session data on cheer event', function(done) {
+      // Arrange
+      const stub = sinon.stub(sessionData, 'addCheerer');
+
+      // Act
+      eventsListener.onEvent(eventsMockData.cheer);
+
+      // Assert
+      expect(stub.calledOnce).to.be.true;
+      done();
+    });
+
+    it('should add raider to session data on raid event', function(done) {
+      // Arrange
+      const stub = sinon.stub(sessionData, 'addRaider');
+
+      // Act
+      eventsListener.onEvent(eventsMockData.raid);
+
+      // Assert
+      expect(stub.calledOnce).to.be.true;
+      done();
+    });
   });
 });

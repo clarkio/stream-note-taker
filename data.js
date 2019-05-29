@@ -8,30 +8,56 @@ module.exports = {
   getAllData
 };
 
-let followersText = '### Followers\n\n\n';
-let subscribersText = '### Subscribers\n\n\n';
-let cheerersText = '### Cheerers\n\n\n';
-let raidersText = '### Raiders/Hosts\n\n\n';
+let followersText = '';
+let subscribersText = '';
+let cheerersText = '';
+let raidersText = '';
 
 function addFollower(username) {
+  if (!username || username === '') {
+    return;
+  }
+
   followersText += `- [@${username}](https://twitch.tv/${username})\n`;
 }
 
 function addSubscriber(username, months) {
+  if (!username || username === '' || !months) {
+    return;
+  }
+
   const monthsText = months > 1 ? 'months' : 'month';
   subscribersText += `- [@${username}](https://twitch.tv/${username}) (${months} ${monthsText})\n`;
 }
 
 function addGiftedSubscriber(username, months, gifterUsername) {
+  if (
+    !username ||
+    username === '' ||
+    !months ||
+    !gifterUsername ||
+    gifterUsername === ''
+  ) {
+    return;
+  }
+
   const monthsText = months > 1 ? 'months' : 'month';
   subscribersText += `- [@${username}](https://twitch.tv/${username}) (${months} ${monthsText}) \`gifted by\` [@${gifterUsername}](https://twitch.tv/${gifterUsername})\n`;
 }
 
 function addCheerer(username, bits) {
+  if (!username || username === '' || !bits || bits === '') {
+    return;
+  }
+
   cheerersText += `- [@${username}](https://twitch.tv/${username}): ${bits} bits\n`;
 }
 
 function addRaider(username, raidCount, hostCount) {
+  if (!username || username === '' || !raidCount) {
+    return;
+  }
+
   raidersText += `- [@${username}](https://twitch.tv/${username}) (${raidCount})\n`;
 }
 
