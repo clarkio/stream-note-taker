@@ -14,7 +14,7 @@ let cheerersText = '';
 let raidersText = '';
 
 function addFollower(username) {
-  if (!username || username === '') {
+  if (!username) {
     return;
   }
 
@@ -22,7 +22,7 @@ function addFollower(username) {
 }
 
 function addSubscriber(username, months) {
-  if (!username || username === '' || !months) {
+  if (!username || !months) {
     return;
   }
 
@@ -31,13 +31,7 @@ function addSubscriber(username, months) {
 }
 
 function addGiftedSubscriber(username, months, gifterUsername) {
-  if (
-    !username ||
-    username === '' ||
-    !months ||
-    !gifterUsername ||
-    gifterUsername === ''
-  ) {
+  if (!username || !months || !gifterUsername) {
     return;
   }
 
@@ -46,7 +40,7 @@ function addGiftedSubscriber(username, months, gifterUsername) {
 }
 
 function addCheerer(username, bits) {
-  if (!username || username === '' || !bits || bits === '') {
+  if (!username || !bits) {
     return;
   }
 
@@ -54,7 +48,7 @@ function addCheerer(username, bits) {
 }
 
 function addRaider(username, raidCount, hostCount) {
-  if (!username || username === '' || !raidCount) {
+  if (!username || !raidCount) {
     return;
   }
 

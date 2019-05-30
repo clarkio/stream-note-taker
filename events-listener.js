@@ -43,8 +43,11 @@ function onEvent(event) {
       );
       break;
     default:
-      break;
+      console.info(`Unsupported event type: ${event.type}`);
+      return false;
   }
+
+  return true;
 }
 
 function determineSubscriberEventType(event) {

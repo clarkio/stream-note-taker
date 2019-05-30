@@ -241,4 +241,53 @@ describe('Data', function() {
       done();
     });
   });
+
+  describe('Raiders', function() {
+    it('should not add a raider with undefined username', function(done) {
+      data.addRaider();
+      const raiderData = data.getAllData().raiders;
+
+      expect(raiderData).to.be.empty;
+
+      done();
+    });
+
+    it('should not add a raider with empty string username', function(done) {
+      data.addRaider('');
+      const raiderData = data.getAllData().raiders;
+
+      expect(raiderData).to.be.empty;
+
+      done();
+    });
+
+    it('should not add a raider with undefined raid count', function(done) {
+      data.addRaider('clarkio');
+      const raiderData = data.getAllData().raiders;
+
+      expect(raiderData).to.be.empty;
+
+      done();
+    });
+
+    it('should not add a raider with empty string raid count', function(done) {
+      data.addRaider('clarkio', '');
+      const raiderData = data.getAllData().raiders;
+
+      expect(raiderData).to.be.empty;
+
+      done();
+    });
+
+    it('should add a raider with valid arguments', function(done) {
+      data.addRaider('clarkio', 10);
+      const raiderData = data.getAllData().raiders;
+
+      expect(raiderData).to.be.equal(
+        '- [@clarkio](https://twitch.tv/clarkio) (10)\n'
+      );
+
+      done();
+    });
+  });
 });

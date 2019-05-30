@@ -37,17 +37,15 @@ describe('Events Listener', function() {
   });
 
   describe('Twitch Alerts', function() {
-    it.only('should do nothing on unsupported event', function(done) {
-      // Arrange
-      const stub = sinon.stub(sessionData);
-
+    it('should do nothing on unsupported event', function(done) {
       // Act
-      eventsListener.onEvent(eventsMockData.follow);
+      const result = eventsListener.onEvent({ type: 'bathroom break' });
 
       // Assert
-      expect(stub.called).to.be.equal(0);
+      expect(result).to.be.false;
       done();
     });
+
     it('should add follower to session data on follow event', function(done) {
       // Arrange
       const stub = sinon.stub(sessionData, 'addFollower');
