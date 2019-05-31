@@ -7,7 +7,7 @@
   "extends": "wesbos",
   "parserOptions": {},
   "rules": {
-    "quotes": ["error", "single"],
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
     "semi": ["error", "always"],
     "no-use-before-define": "off"
   }

@@ -1,11 +1,28 @@
 const eventsListener = require('./events-listener');
 const files = require('./files');
 const streamStatus = require('./stream-status');
-
-files.initTodaysStreamNotes();
+const sessionData = require('./data');
 
 eventsListener.start();
 
-eventsListener._testEvent('follow');
+const monitorInterval = streamStatus.startMonitoring();
+const checkStatusInterval = setInterval(() => {
+  if (!streamStatus.isStreamOnline()) {
+    console.log('Stream is offline');
+    files.writeStreamNotes(sessionData.getAllData());
 
-// console.dir(eventsListener.getSessionData());
+    clearInterval(monitorInterval);
+    clearInterval(checkStatusInterval);
+    process.exit();
+  }
+}, 10000);
+
+// Uncomment the following to manually test events while offline
+/*
+eventsListener._testEvent('follow');
+eventsListener._testEvent('follow');
+eventsListener._testEvent('subscriber');
+eventsListener._testEvent('giftedsub');
+eventsListener._testEvent('cheer');
+eventsListener._testEvent('raid');
+*/

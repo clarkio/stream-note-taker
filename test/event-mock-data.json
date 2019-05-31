@@ -2,7 +2,7 @@
   "follow": {
     "type": "follow",
     "data": {
-      "username": "test-follower"
+      "username": "FollowerSampleUser"
     }
   },
   "subscriber": {

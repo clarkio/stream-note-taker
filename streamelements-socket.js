@@ -64,6 +64,9 @@ function _testEvent(eventType) {
     case 'subscriber':
       socket.emit('event:test', testEventData.subscriber);
       break;
+    case 'giftedsub':
+      socket.emit('event:test', testEventData.giftedSubscriber);
+      break;
     case 'cheer':
       socket.emit('event:test', testEventData.cheer);
       break;

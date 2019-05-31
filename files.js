@@ -15,15 +15,32 @@ const fullUri = `${uri}${finaleFileName}`;
 const templateFileName = 'template.md';
 const fullTemplateUri = `${uri}${templateFileName}`;
 
-const followersHeader = '### Followers\n\n\n';
-const subscribersHeader = '### Subscribers\n\n\n';
-const cheerersHeader = '### Cheerers\n\n\n';
-const raidersHeader = '### Raiders/Hosts\n\n\n';
+const streamSupportersHeader = `## Today's Stream Supporters\n\n`;
+const followersHeader = '### Followers\n\n';
+const subscribersHeader = '### Subscribers\n\n';
+const cheerersHeader = '### Cheerers\n\n';
+const raidersHeader = '### Raiders/Hosts\n\n';
 
 module.exports = {
   initTodaysStreamNotes,
   addFollower,
+  writeStreamNotes,
 };
+
+function writeStreamNotes(data) {
+  console.log('Writing streams notes for this session...');
+  console.dir(data);
+  let fileContents = streamSupportersHeader;
+  fileContents += followersHeader;
+  fileContents += data.followers;
+  fileContents += `\n${subscribersHeader}`;
+  fileContents += data.subscribers;
+  fileContents += `\n${cheerersHeader}`;
+  fileContents += data.cheerers;
+  fileContents += `\n${raidersHeader}`;
+  fileContents += data.raiders;
+  fs.writeFileSync(fullUri, fileContents);
+}
 
 function initTodaysStreamNotes() {
   let todaysStreamNotesContent = '';
