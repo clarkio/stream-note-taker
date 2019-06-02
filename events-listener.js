@@ -23,21 +23,21 @@ function getSessionData() {
 }
 
 // https://github.com/StreamElements/widgets/blob/master/CustomCode.md#on-event
-function onEvent(event) {
+function onEvent(event, _sessionData = sessionData) {
   // Event types to check for can be found here: https://developers.streamelements.com/endpoints/activities
   switch (event.type) {
     case 'follow':
-      sessionData.addFollower(event.data.username);
+      _sessionData.addFollower(event.data.username);
       break;
     case 'subscriber': {
-      determineSubscriberEventType(event);
+      determineSubscriberEventType(event, _sessionData);
       break;
     }
     case 'cheer':
-      sessionData.addCheerer(event.data.username, event.data.amount);
+      _sessionData.addCheerer(event.data.username, event.data.amount);
       break;
     case 'raid':
-      sessionData.addRaider(
+      _sessionData.addRaider(
         event.data.username,
         event.data.amount,
         event.data.amount
@@ -51,15 +51,15 @@ function onEvent(event) {
   return true;
 }
 
-function determineSubscriberEventType(event) {
+function determineSubscriberEventType(event, _sessionData = sessionData) {
   if (event.data.sender) {
-    sessionData.addGiftedSubscriber(
+    _sessionData.addGiftedSubscriber(
       event.data.username,
       event.data.amount,
       event.data.sender
     );
   } else {
-    sessionData.addSubscriber(event.data.username, event.data.amount);
+    _sessionData.addSubscriber(event.data.username, event.data.amount);
   }
 }
 
