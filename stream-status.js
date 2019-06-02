@@ -1,6 +1,8 @@
 require('dotenv').config();
 const axios = require('axios');
 
+const logger = require('./logger');
+
 const username = process.env.TWITCH_CHANNEL;
 let isOnline = false;
 
@@ -27,7 +29,7 @@ function getStreamStatus() {
       isOnline = !!response.data && response.data.length > 0;
     })
     .catch(error => {
-      console.error(error);
+      logger.error(error);
       isOnline = false;
     });
 }

@@ -3,6 +3,7 @@ require('dotenv').config();
 const streamElementsSocket = require('./streamelements-socket');
 const files = require('./files');
 const sessionData = require('./data');
+const logger = require('./logger');
 
 module.exports = {
   start,
@@ -43,7 +44,7 @@ function onEvent(event) {
       );
       break;
     default:
-      console.info(`Unsupported event type: ${event.type}`);
+      logger.info(`Unsupported event type: ${event.type}`);
       return false;
   }
 
@@ -63,7 +64,7 @@ function determineSubscriberEventType(event) {
 }
 
 function onEventTest(event) {
-  console.dir('Received Test Event', event);
+  logger.dir('Received Test Event', event);
   onEvent(event);
 }
 
