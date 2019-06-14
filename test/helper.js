@@ -1,5 +1,5 @@
 const sinon = require('sinon');
-const logger = require('../logger');
+const logger = require('../src/logger');
 
 beforeEach(function() {
   sinon.stub(logger, 'info');

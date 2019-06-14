@@ -1,7 +1,7 @@
 require('dotenv').config();
 const io = require('socket.io-client');
 
-const testEventData = require('./test/event-mock-data.json');
+const testEventData = require('../test/event-mock-data.json');
 const logger = require('./logger');
 
 const accessToken = process.env.SE_TOKEN;

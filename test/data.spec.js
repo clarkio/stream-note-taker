@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-expressions */
 const { expect } = require('chai');
 
-const data = require('../data');
+const data = require('../src/data');
 
 describe('Data', function() {
   describe('Sanity Checks', function() {

@@ -3,7 +3,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const axios = require('axios');
 
-const streamStatus = require('../stream');
+const streamStatus = require('../src/stream');
 
 describe('Stream Status', function() {
   it('should return false by default', function(done) {

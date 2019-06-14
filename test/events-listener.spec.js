@@ -2,10 +2,10 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 
-const sessionData = require('../data');
-const eventsListener = require('../events-listener');
+const sessionData = require('../src/data');
+const eventsListener = require('../src/events-listener');
 const eventsMockData = require('./event-mock-data.json');
-const streamElementsSocket = require('../streamelements-socket');
+const streamElementsSocket = require('../src/streamelements-socket');
 
 const { onEvent } = eventsListener;
 
