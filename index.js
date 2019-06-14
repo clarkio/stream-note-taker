@@ -10,7 +10,7 @@ eventsListener.start();
 const monitorInterval = stream.startMonitoring();
 const checkStatusInterval = setInterval(() => {
   if (!stream.isStreamOnline()) {
-    console.log('Stream is offline');
+    logger.log('Stream is offline');
     files.writeStreamNotes(sessionData.getAllData());
 
     clearInterval(monitorInterval);
