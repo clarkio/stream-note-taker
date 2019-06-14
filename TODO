@@ -9,6 +9,88 @@
 
 
 NOTES:
+!mark <text>
+!note <text>
+
+
+// => | <timestamp> | <note/mark text> `by` [@username]() |
+
+
+listen to chat
+parse chat messages
+determine if message is intended as a command for stream note taker tool
+if so then take action on the command
+
+-----
+
+Module to create:
+chat-listener.js
+
+Functionality to implement:
+- Start listening to chat: start()
+- check chat message for command: getCommandFromChat(message: string) => string | undefined where string is the message for the note/marker timestamp
+- stop/disconnect from chat: stop()
+
+-----
+
+Module to update:
+stream.js
+
+Functionality to add:
+- get stream start time: getStreamStartTime() => string | undefined where string is the string representation of the date/time the stream started
+- get current stream uptime timestamp: getStreamUptime() => string | undefined where string is timestamp representation
+
+-----
+
+Module to update:
+data.js
+
+Functionality to add:
+- Add marker/note: addMarker(noteText: string, timestamp: string)
+  - addMarker will add the marker to a string variable holding text that will be written to the file
+  - The format of the text to add will be: | <timestamp> | <noteText> |
+
+
+
+7 D's
+Design
+Develop
+Destroy
+Document
+Demo
+DaReview
+Deploy
+
+{
+  "data": [
+    {
+      "id": "34349568720",
+      "user_id": "81844533",
+      "user_name": "Clarkio",
+      "game_id": "509670",
+      "community_ids": [
+        "848d95be-90b3-44a5-b143-6e373754c382",
+        "9d175334-ccdd-4da8-a3aa-d9631f95610e"
+      ],
+      "type": "live",
+      "title": "[Node.js/JavaScript] 💻 Writing tests for a new feature in Node.js | !sfx !bulbinfo !line // @_clarkio || @clarkio",
+      "viewer_count": 55,
+      "started_at": "2019-05-31T16:29:17Z",
+      "language": "en",
+      "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_clarkio-{width}x{height}.jpg",
+      "tag_ids": [
+        "e90b5f6e-4c6e-4003-885b-4d0d5adeb580",
+        "67259b26-ff83-444e-9d3c-faab390df16f",
+        "cea7bc0c-75a5-4446-8743-6db031b71550",
+        "6ea6bca4-4712-4ab9-a906-e3336a9d8039"
+      ]
+    }
+  ],
+  "pagination": {
+    "cursor": "eyJiIjpudWxsLCJhIjp7Ik9mZnNldCI6MX19"
+  }
+}
+
 clarkio user_id = 81844533
 Determined from GET  https://api.twitch.tv/helix/users?login=clarkio
 
