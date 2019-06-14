@@ -3,6 +3,7 @@ require('dotenv').config();
 const streamElementsSocket = require('./streamelements-socket');
 const files = require('./files');
 const sessionData = require('./data');
+const logger = require('./logger');
 
 module.exports = {
   start,
@@ -22,48 +23,48 @@ function getSessionData() {
 }
 
 // https://github.com/StreamElements/widgets/blob/master/CustomCode.md#on-event
-function onEvent(event) {
+function onEvent(event, _sessionData = sessionData) {
   // Event types to check for can be found here: https://developers.streamelements.com/endpoints/activities
   switch (event.type) {
     case 'follow':
-      sessionData.addFollower(event.data.username);
+      _sessionData.addFollower(event.data.username);
       break;
     case 'subscriber': {
-      determineSubscriberEventType(event);
+      determineSubscriberEventType(event, _sessionData);
       break;
     }
     case 'cheer':
-      sessionData.addCheerer(event.data.username, event.data.amount);
+      _sessionData.addCheerer(event.data.username, event.data.amount);
       break;
     case 'raid':
-      sessionData.addRaider(
+      _sessionData.addRaider(
         event.data.username,
         event.data.amount,
         event.data.amount
       );
       break;
     default:
-      console.info(`Unsupported event type: ${event.type}`);
+      logger.info(`Unsupported event type: ${event.type}`);
       return false;
   }
 
   return true;
 }
 
-function determineSubscriberEventType(event) {
+function determineSubscriberEventType(event, _sessionData = sessionData) {
   if (event.data.sender) {
-    sessionData.addGiftedSubscriber(
+    _sessionData.addGiftedSubscriber(
       event.data.username,
       event.data.amount,
       event.data.sender
     );
   } else {
-    sessionData.addSubscriber(event.data.username, event.data.amount);
+    _sessionData.addSubscriber(event.data.username, event.data.amount);
   }
 }
 
 function onEventTest(event) {
-  console.dir('Received Test Event', event);
+  logger.dir('Received Test Event', event);
   onEvent(event);
 }
 

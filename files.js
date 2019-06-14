@@ -4,6 +4,8 @@ const moment = require('moment');
 const _template = require('lodash.template');
 const markdownIt = require('markdown-it');
 
+const logger = require('./logger');
+
 const md = markdownIt();
 
 // TODO: change this back to use the env variable
@@ -28,8 +30,8 @@ module.exports = {
 };
 
 function writeStreamNotes(data) {
-  console.log('Writing streams notes for this session...');
-  console.dir(data);
+  logger.log('Writing streams notes for this session...');
+  logger.dir(data);
   let fileContents = streamSupportersHeader;
   fileContents += followersHeader;
   fileContents += data.followers;
@@ -61,7 +63,7 @@ function initTodaysStreamNotes() {
             Day: today.format('DD'),
             Year: today.format('YYYY'),
           });
-          console.log(header);
+          logger.log(header);
           todaysStreamNotesContent += header;
         } else {
           todaysStreamNotesContent += token.content;
@@ -78,12 +80,12 @@ function initTodaysStreamNotes() {
         break;
     }
   });
-  console.dir(temp[0].children);
-  console.log(todaysStreamNotesContent);
+  logger.dir(temp[0].children);
+  logger.log(todaysStreamNotesContent);
 }
 
 function addFollower(username) {
-  console.log(todayDate);
+  logger.log(todayDate);
 
   const followerEntry = `- [@${username}](https://twitch.tv/${username})`;
 

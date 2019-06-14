@@ -2,6 +2,7 @@ require('dotenv').config();
 const io = require('socket.io-client');
 
 const testEventData = require('./test/event-mock-data.json');
+const logger = require('./logger');
 
 const accessToken = process.env.SE_TOKEN;
 let socket;
@@ -38,20 +39,20 @@ function connect(eventsListener) {
 function disconnect() {}
 
 function _onConnect() {
-  console.log('Successfully connected to the websocket');
+  logger.log('Successfully connected to the websocket');
 
   socket.emit('authenticate', { method: 'jwt', token: accessToken });
 }
 
 function _onDisconnect() {
-  console.log('Disconnected from websocket');
+  logger.log('Disconnected from websocket');
   // Reconnect
 }
 
 function _onAuthenticated(data) {
   const { channelId } = data;
 
-  console.log(`Successfully connected to channel ${channelId}`);
+  logger.log(`Successfully connected to channel ${channelId}`);
   // Use the following to manually trigger events for testing
   // onEvent({ type: 'follow', data: { username: 'test' } });
 }
