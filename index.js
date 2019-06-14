@@ -1,16 +1,16 @@
 const eventsListener = require('./events-listener');
 const files = require('./files');
-const streamStatus = require('./stream-status');
+const stream = require('./stream');
 const sessionData = require('./data');
 
 const logger = require('./logger');
 
 eventsListener.start();
 
-const monitorInterval = streamStatus.startMonitoring();
+const monitorInterval = stream.startMonitoring();
 const checkStatusInterval = setInterval(() => {
-  if (!streamStatus.isStreamOnline()) {
-    logger.log('Stream is offline');
+  if (!stream.isStreamOnline()) {
+    console.log('Stream is offline');
     files.writeStreamNotes(sessionData.getAllData());
 
     clearInterval(monitorInterval);
