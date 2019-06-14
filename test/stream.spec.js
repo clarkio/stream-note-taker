@@ -3,7 +3,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const axios = require('axios');
 
-const streamStatus = require('../stream-status');
+const streamStatus = require('../stream');
 
 describe('Stream Status', function() {
   it('should return false by default', function(done) {
@@ -50,4 +50,7 @@ describe('Stream Status', function() {
   it('should create an interval on start of monitoring stream status');
 
   it('should clear/destroy an interval on stop of monitoring stream status');
+
+  // Need to stub the axios.get call to Twitch API streams endpoint and fake a time that was 3 hours ago
+  it('should return expected uptime');
 });
