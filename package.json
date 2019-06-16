@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "debug-brk": "node --inspect-brk src/index.js",
     "test": "nyc --reporter=html --reporter=text mocha"
   },
   "repository": {
@@ -18,12 +19,13 @@
   },
   "homepage": "https://github.com/clarkio/stream-notes#readme",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "dotenv": "^8.0.0",
     "lodash.template": "^4.4.0",
     "markdown-it": "^8.4.2",
     "moment": "^2.24.0",
-    "socket.io-client": "^2.2.0"
+    "socket.io-client": "^2.2.0",
+    "tmi.js": "^1.4.2"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",

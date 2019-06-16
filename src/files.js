@@ -22,25 +22,27 @@ const followersHeader = '### Followers\n\n';
 const subscribersHeader = '### Subscribers\n\n';
 const cheerersHeader = '### Cheerers\n\n';
 const raidersHeader = '### Raiders/Hosts\n\n';
+const segmentsHeader = '## Segments\n\n';
 
 module.exports = {
   initTodaysStreamNotes,
-  addFollower,
   writeStreamNotes,
 };
 
 function writeStreamNotes(data) {
   logger.log('Writing streams notes for this session...');
   logger.dir(data);
-  let fileContents = streamSupportersHeader;
-  fileContents += followersHeader;
-  fileContents += data.followers;
+  let fileContents = segmentsHeader;
+  fileContents += data.timestamps;
+  fileContents += `\n${streamSupportersHeader}`;
+  fileContents += raidersHeader;
+  fileContents += data.raiders;
   fileContents += `\n${subscribersHeader}`;
   fileContents += data.subscribers;
   fileContents += `\n${cheerersHeader}`;
   fileContents += data.cheerers;
-  fileContents += `\n${raidersHeader}`;
-  fileContents += data.raiders;
+  fileContents += `\n${followersHeader}`;
+  fileContents += data.followers;
   fs.writeFileSync(fullUri, fileContents);
 }
 
@@ -82,12 +84,4 @@ function initTodaysStreamNotes() {
   });
   logger.dir(temp[0].children);
   logger.log(todaysStreamNotesContent);
-}
-
-function addFollower(username) {
-  logger.log(todayDate);
-
-  const followerEntry = `- [@${username}](https://twitch.tv/${username})`;
-
-  // return fs.writeFileSync(fullUri, followerEntry);
 }

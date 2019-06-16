@@ -1,11 +1,19 @@
+☐ Research solutions if this tool were to continuously run 24/7 @created(Sun 06/16/2019 - 12:42 AM)
+  ☐ Since it would need to be hosted where would you write/save the stream notes file?@created(Sun 06/16/2019 - 12:44 AM)
+    Ideas:
+      - Write directly to GitHub repo via API?
+      - Store in a database and then pull locally to write file and upload to repo?
+      - Store as a file in blog storage?
+  ☐ Need to be able to enable/disable timestamp command (!mark) and limit to only when we're live @created(Sun 06/16/2019 - 12:58 AM)
+    - Add message to respond with in chat when it's not enabled
 ✔ Add capability to connect to Twitch API/events @created(Thu 05/23/2019 - 12:30 AM) @done(19-05-23 00:31)
-☐ Implement initialization of stream notes file from template @created(Thu 05/23/2019 - 12:31 AM)
-  ☐ Determine markdown parsing/writing module to use @created(Thu 05/23/2019 - 12:32 AM)
-  ☐ Use markdown parser module to read from template.md @created(Thu 05/23/2019 - 12:32 AM)
-  ☐ Write new file for stream notes using the parsed template @created(Thu 05/23/2019 - 12:33 AM)
-☐ Determine approach for finding event sections (such as "Followers") and appending to them @created(Thu 05/23/2019 - 12:34 AM)
-  ☐ Add functions in `files.js` to append events to the stream notes @created(Thu 05/23/2019 - 12:35 AM)
-  ☐ Call those functions when events are received in `events-listener.js` @created(Thu 05/23/2019 - 12:36 AM)
+✘ Implement initialization of stream notes file from template @created(Thu 05/23/2019 - 12:31 AM) @cancelled(19-06-16 00:42)
+  ✘ Determine markdown parsing/writing module to use @created(Thu 05/23/2019 - 12:32 AM) @cancelled(19-06-16 00:42)
+  ✘ Use markdown parser module to read from template.md @created(Thu 05/23/2019 - 12:32 AM) @cancelled(19-06-16 00:42)
+  ✘ Write new file for stream notes using the parsed template @created(Thu 05/23/2019 - 12:33 AM) @cancelled(19-06-16 00:42)
+✔ Determine approach for finding event sections (such as "Followers") and appending to them @created(Thu 05/23/2019 - 12:34 AM) @done(19-06-16 00:39)
+  ✘ Add functions in `files.js` to append events to the stream notes @created(Thu 05/23/2019 - 12:35 AM) @cancelled(19-06-16 00:42)
+  ✘ Call those functions when events are received in `events-listener.js` @created(Thu 05/23/2019 - 12:36 AM) @cancelled(19-06-16 00:42)
 
 
 NOTES:
@@ -95,3 +103,5 @@ clarkio user_id = 81844533
 Determined from GET  https://api.twitch.tv/helix/users?login=clarkio
 
 hub.topic URL https://api.twitch.tv/helix/streams?user_id=81844533
+
+Archive:

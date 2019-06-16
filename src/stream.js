@@ -18,7 +18,8 @@ module.exports = {
 getStreamStartTime();
 
 function startMonitoring() {
-  return setInterval(getStreamStatus, 30000);
+  getStreamStatus();
+  return setInterval(getStreamStatus, 60000);
 }
 
 function isStreamOnline() {
@@ -30,8 +31,9 @@ function getStreamStatus() {
     .get(`https://api.twitch.tv/helix/streams?user_login=${username}`, {
       headers: { 'Client-ID': process.env.TWITCH_CLIENT_ID },
     })
-    .then(response => {
-      isOnline = !!response.data && response.data.length > 0;
+    .then(({ data: response }) => {
+      // Destructuring the response wrapped by axios since Twitch API returns response as object with key 'data' as well
+      isOnline = response.data.length > 0;
     })
     .catch(error => {
       logger.error(error);
@@ -44,19 +46,19 @@ function getStreamStartTime() {
     .get(`https://api.twitch.tv/helix/streams?user_login=${username}`, {
       headers: { 'Client-ID': process.env.TWITCH_CLIENT_ID },
     })
-    .then(response => {
-      if (!!response.data && response.data.length > 0) {
+    .then(({ data: response }) => {
+      if (response.data.length > 0) {
         streamStartDateTime = response.data[0].started_at;
       }
     })
     .catch(error => {
-      console.error('Failed to retrieve stream start time', error);
+      logger.error('Failed to retrieve stream start time', error);
     });
 }
 
 function getStreamUptime() {
   if (!streamStartDateTime) {
-    console.log(
+    logger.log(
       'Stream Start Date/Time has not been recorded and therefore we cannot calculate uptime'
     );
     return;

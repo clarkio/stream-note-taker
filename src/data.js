@@ -1,17 +1,22 @@
 /* eslint-disable prettier/prettier */
+require('dotenv').config();
+
 module.exports = {
   addFollower,
   addSubscriber,
   addGiftedSubscriber,
   addCheerer,
   addRaider,
+  addTimestamp,
   getAllData
 };
 
+const channel = process.env.TWITCH_CHANNEL.toLowerCase();
 let followersText = '';
 let subscribersText = '';
 let cheerersText = '';
 let raidersText = '';
+let timestampsText = '| Timestamp | Topic |\n| --------- | ------------ |\n';
 
 function addFollower(username) {
   if (!username) {
@@ -55,11 +60,24 @@ function addRaider(username, raidCount, hostCount) {
   raidersText += `- [@${username}](https://twitch.tv/${username}) (${raidCount})\n`;
 }
 
+function addTimestamp(timestamp, comment, username) {
+  if (!timestamp) {
+    return;
+  }
+
+  if (username && username.toLowerCase() !== channel) {
+    timestampsText += `| ${timestamp} | ${comment} created by [@${username}](https://twitch.tv/${username}) |\n`;
+  } else {
+    timestampsText += `| ${timestamp} | ${comment} |\n`;
+  }
+}
+
 function getAllData() {
   return {
     followers: followersText,
     subscribers: subscribersText,
     cheerers: cheerersText,
-    raiders: raidersText
+    raiders: raidersText,
+    timestamps: timestampsText
   };
 }

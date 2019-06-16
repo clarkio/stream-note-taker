@@ -1,30 +1,60 @@
+require('dotenv').config();
+
 const eventsListener = require('./events-listener');
 const files = require('./files');
 const stream = require('./stream');
 const sessionData = require('./data');
-
+const chatListener = require('./chat-listener');
+const streamElements = require('./streamelements');
 const logger = require('./logger');
 
-eventsListener.start();
+const captureMarkers = process.env.CAPTURE_MARKERS;
+const runWhileStreaming =
+  captureMarkers && captureMarkers.toLowerCase() === 'true';
 
-const monitorInterval = stream.startMonitoring();
-const checkStatusInterval = setInterval(() => {
-  if (!stream.isStreamOnline()) {
-    logger.log('Stream is offline');
-    files.writeStreamNotes(sessionData.getAllData());
+// Set CAPTURE_MARKERS to true if you want to enable !mark commands for writing the timestamps in the Segments section of your stream notes while also capturing alerts to write to their corresponding sections.
+// Set CAPTURE_MARKERS to false if you are running this after your most recent stream and want to capture just the alerts that happened during that session
+if (runWhileStreaming) {
+  eventsListener.start();
+  chatListener.start();
 
-    clearInterval(monitorInterval);
-    clearInterval(checkStatusInterval);
+  const monitorInterval = stream.startMonitoring();
+
+  // Wait 10 seconds after start up to see if the stream is online
+  // Continue to check until offline using the interval
+  const checkStatusInterval = setInterval(() => {
+    if (!stream.isStreamOnline()) {
+      logger.log('Stream is now offline');
+      const dataToWrite = sessionData.getAllData();
+      if (dataToWrite && dataToWrite.followers !== '') {
+        files.writeStreamNotes(sessionData.getAllData());
+      }
+
+      // Stop monitoring the stream for events and checking the status of the stream before exiting this app
+      clearInterval(monitorInterval);
+      clearInterval(checkStatusInterval);
+      process.exit();
+    }
+  }, 10000);
+} else {
+  streamElements.setEventsListener(eventsListener);
+  streamElements.getRecentActivities().then(completed => {
+    if (completed) {
+      files.writeStreamNotes(sessionData.getAllData());
+    } else {
+      logger.log('The recent activity retrieval did not finish');
+    }
     process.exit();
-  }
-}, 10000);
+  });
+}
 
-// Uncomment the following to manually test events while offline
-/*
-eventsListener._testEvent('follow');
-eventsListener._testEvent('follow');
-eventsListener._testEvent('subscriber');
-eventsListener._testEvent('giftedsub');
-eventsListener._testEvent('cheer');
-eventsListener._testEvent('raid');
-*/
+process.on('exit', () => {
+  logger.log('Exiting the app');
+  process.exit();
+});
+
+process.on('SIGINT', () => {
+  logger.log('Terminating the app');
+  // files.writeStreamNotes(sessionData.getAllData());
+  process.exit();
+});

@@ -15,7 +15,9 @@ describe('Stream Status', function() {
   });
 
   it('should return true when stream is online', function(done) {
-    const stub = sinon.stub(axios, 'get').resolves({ data: ['', ''] });
+    const stub = sinon
+      .stub(axios, 'get')
+      .resolves({ data: { data: ['', ''] } });
 
     streamStatus.getStreamStatus().then(() => {
       const isOnline = streamStatus.isStreamOnline();

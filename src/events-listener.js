@@ -1,7 +1,6 @@
 require('dotenv').config();
 
-const streamElementsSocket = require('./streamelements-socket');
-const files = require('./files');
+const streamElementsSocket = require('./streamelements');
 const sessionData = require('./data');
 const logger = require('./logger');
 

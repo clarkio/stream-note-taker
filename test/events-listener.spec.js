@@ -5,7 +5,7 @@ const sinon = require('sinon');
 const sessionData = require('../src/data');
 const eventsListener = require('../src/events-listener');
 const eventsMockData = require('./event-mock-data.json');
-const streamElementsSocket = require('../src/streamelements-socket');
+const streamElementsSocket = require('../src/streamelements');
 
 const { onEvent } = eventsListener;
 
