@@ -1,5 +1,5 @@
-const fs = require('fs');
 require('dotenv').config();
+const fs = require('fs');
 const moment = require('moment');
 const _template = require('lodash.template');
 const markdownIt = require('markdown-it');
@@ -9,13 +9,13 @@ const logger = require('./logger');
 const md = markdownIt();
 
 // TODO: change this back to use the env variable
-const uri = './'; // process.env.WORKING_DIRECTORY;
+const directory = process.env.WORKING_DIRECTORY;
 const today = moment();
 const todayDate = moment().format('YYYY-MM-DD');
 const finaleFileName = `${todayDate}.md`;
-const fullUri = `${uri}${finaleFileName}`;
+const fullUri = `${directory}${finaleFileName}`;
 const templateFileName = 'template.md';
-const fullTemplateUri = `${uri}${templateFileName}`;
+const fullTemplateUri = `${directory}${templateFileName}`;
 
 const streamSupportersHeader = `## Today's Stream Supporters\n\n`;
 const followersHeader = '### Followers\n\n';
@@ -31,7 +31,8 @@ module.exports = {
 
 function writeStreamNotes(data) {
   logger.log('Writing streams notes for this session...');
-  logger.dir(data);
+  // logger.dir(data);
+
   let fileContents = segmentsHeader;
   fileContents += data.timestamps;
   fileContents += `\n${streamSupportersHeader}`;
@@ -43,6 +44,11 @@ function writeStreamNotes(data) {
   fileContents += data.cheerers;
   fileContents += `\n${followersHeader}`;
   fileContents += data.followers;
+
+  if (!fs.existsSync(directory)) {
+    fs.mkdirSync(directory);
+  }
+
   fs.writeFileSync(fullUri, fileContents);
 }
 
