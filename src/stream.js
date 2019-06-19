@@ -5,25 +5,29 @@ const moment = require('moment');
 const logger = require('./logger');
 
 const username = process.env.TWITCH_CHANNEL;
-let isOnline = false;
+let isStreamOnline = false;
 let streamStartDateTime;
 
 module.exports = {
   startMonitoring,
-  isStreamOnline,
+  isOnline,
   getStreamStatus,
   getStreamUptime,
 };
 
 getStreamStartTime();
 
-function startMonitoring() {
-  getStreamStatus();
-  return setInterval(getStreamStatus, 60000);
+function startMonitoring(milliseconds, _getStreamStatus = getStreamStatus) {
+  return getStatusEvery(milliseconds, _getStreamStatus);
 }
 
-function isStreamOnline() {
-  return isOnline;
+function getStatusEvery(milliseconds, _getStreamStatus = getStreamStatus) {
+  _getStreamStatus();
+  return setInterval(_getStreamStatus, milliseconds);
+}
+
+function isOnline() {
+  return isStreamOnline;
 }
 
 function getStreamStatus() {
@@ -33,11 +37,13 @@ function getStreamStatus() {
     })
     .then(({ data: response }) => {
       // Destructuring the response wrapped by axios since Twitch API returns response as object with key 'data' as well
-      isOnline = response.data.length > 0;
+      isStreamOnline = response.data.length > 0;
+      return true;
     })
     .catch(error => {
       logger.error(error);
-      isOnline = false;
+      isStreamOnline = false;
+      return false;
     });
 }
 

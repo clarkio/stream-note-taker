@@ -6,6 +6,8 @@
       - Store as a file in blog storage?
   ☐ Need to be able to enable/disable timestamp command (!mark) and limit to only when we're live @created(Sun 06/16/2019 - 12:58 AM)
     - Add message to respond with in chat when it's not enabled
+
+--- OLD ---
 ✔ Add capability to connect to Twitch API/events @created(Thu 05/23/2019 - 12:30 AM) @done(19-05-23 00:31)
 ✘ Implement initialization of stream notes file from template @created(Thu 05/23/2019 - 12:31 AM) @cancelled(19-06-16 00:42)
   ✘ Determine markdown parsing/writing module to use @created(Thu 05/23/2019 - 12:32 AM) @cancelled(19-06-16 00:42)

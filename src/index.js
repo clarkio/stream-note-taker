@@ -18,12 +18,12 @@ if (runWhileStreaming) {
   eventsListener.start();
   chatListener.start();
 
-  const monitorInterval = stream.startMonitoring();
+  const monitorInterval = stream.startMonitoring(60000);
 
   // Wait 10 seconds after start up to see if the stream is online
   // Continue to check until offline using the interval
   const checkStatusInterval = setInterval(() => {
-    if (!stream.isStreamOnline()) {
+    if (!stream.isOnline()) {
       logger.log('Stream is now offline');
       const dataToWrite = sessionData.getAllData();
       if (dataToWrite && dataToWrite.followers !== '') {

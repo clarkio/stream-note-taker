@@ -3,11 +3,16 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const axios = require('axios');
 
-const streamStatus = require('../src/stream');
+const stream = require('../src/stream');
 
-describe('Stream Status', function() {
+describe('Stream', function() {
+  afterEach(() => {
+    // Restore the default sandbox here
+    // sinon.restore();
+  });
+
   it('should return false by default', function(done) {
-    const result = streamStatus.isStreamOnline();
+    const result = stream.isOnline();
 
     expect(result).to.be.false;
 
@@ -19,19 +24,40 @@ describe('Stream Status', function() {
       .stub(axios, 'get')
       .resolves({ data: { data: ['', ''] } });
 
-    streamStatus.getStreamStatus().then(() => {
-      const isOnline = streamStatus.isStreamOnline();
+    stream.getStreamStatus().then(() => {
+      const isOnline = stream.isOnline();
       expect(isOnline).to.be.true;
       stub.restore();
       done();
     });
   });
 
+  it('should check stream status on an interval', function(done) {
+    // Arrange
+    const getStreamStatusAxiosStub = sinon
+      .stub(axios, 'get')
+      .resolves({ data: { data: ['', ''] } });
+    const clock = sinon.useFakeTimers();
+    const getStreamStatusSpy = sinon.spy(stream, 'getStreamStatus');
+
+    // Act
+    stream.startMonitoring(1000, getStreamStatusSpy);
+    clock.tick(1000);
+
+    // Assert
+    expect(getStreamStatusAxiosStub.calledTwice).to.be.true;
+    expect(getStreamStatusSpy.calledTwice).to.be.true;
+
+    clock.restore();
+    getStreamStatusAxiosStub.restore();
+    done();
+  });
+
   it('should return false when stream is offline', function(done) {
     const stub = sinon.stub(axios, 'get').resolves({});
 
-    streamStatus.getStreamStatus().then(() => {
-      const isOnline = streamStatus.isStreamOnline();
+    stream.getStreamStatus().then(() => {
+      const isOnline = stream.isOnline();
       expect(isOnline).to.be.false;
       stub.restore();
       done();
@@ -41,8 +67,8 @@ describe('Stream Status', function() {
   it('should return false when API request errors', function(done) {
     const stub = sinon.stub(axios, 'get').rejects('Testing error case');
 
-    streamStatus.getStreamStatus().then(() => {
-      const isOnline = streamStatus.isStreamOnline();
+    stream.getStreamStatus().then(() => {
+      const isOnline = stream.isOnline();
       expect(isOnline).to.be.false;
       stub.restore();
       done();
