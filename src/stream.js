@@ -14,7 +14,7 @@ module.exports = {
   isOnline,
   getStreamStatus,
   getStreamUptime,
-  streamId
+  streamId,
 };
 
 getStreamStartTime();
@@ -35,7 +35,7 @@ function isOnline() {
 function getStreamStatus() {
   return axios
     .get(`https://api.twitch.tv/helix/streams?user_login=${username}`, {
-      headers: { 'Client-ID': process.env.TWITCH_CLIENT_ID }
+      headers: { 'Client-ID': process.env.TWITCH_CLIENT_ID },
     })
     .then(({ data: response }) => {
       // Destructuring the response wrapped by axios since Twitch API returns response as object with key 'data' as well
@@ -54,13 +54,11 @@ function getStreamStatus() {
 function getStreamStartTime() {
   return axios
     .get(`https://api.twitch.tv/helix/streams?user_login=${username}`, {
-      headers: { 'Client-ID': process.env.TWITCH_CLIENT_ID }
+      headers: { 'Client-ID': process.env.TWITCH_CLIENT_ID },
     })
     .then(({ data: response }) => {
       if (response.data.length > 0) {
         streamStartDateTime = response.data[0].started_at;
-      } else {
-        streamStartDateTime = new Date('2019-06-20');
       }
     })
     .catch(error => {
@@ -84,7 +82,7 @@ function getStreamUptime() {
   return {
     hour,
     minute,
-    second
+    second,
   };
   // return moment
   //   .utc(moment.utc() - moment.utc(streamStartDateTime))
