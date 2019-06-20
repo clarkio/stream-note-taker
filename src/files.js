@@ -16,6 +16,12 @@ const finaleFileName = `${todayDate}.md`;
 const fullUri = `${directory}${finaleFileName}`;
 const templateFileName = 'template.md';
 const fullTemplateUri = `${directory}${templateFileName}`;
+const tempDataFileBaseUri = `${directory}/${todayDate}-`;
+const followerFileUri = `${tempDataFileBaseUri}followers.md`;
+const subscriberFileUri = `${tempDataFileBaseUri}subscribers.md`;
+const cheererFileUri = `${tempDataFileBaseUri}cheerers.md`;
+const raiderFileUri = `${tempDataFileBaseUri}raiders.md`;
+const segmentsFileUri = `${tempDataFileBaseUri}segments.md`;
 
 const streamSupportersHeader = `## Today's Stream Supporters\n\n`;
 const followersHeader = '### Followers\n\n';
@@ -25,9 +31,47 @@ const raidersHeader = '### Raiders/Hosts\n\n';
 const segmentsHeader = '## Segments\n\n';
 
 module.exports = {
-  initTodaysStreamNotes,
+  initTodaysStreamNotes: initTodaysStreamNotesOld,
+  initDataNotes,
   writeStreamNotes,
+  writeData
 };
+
+function initDataNotes() {
+  if (!fs.existsSync(directory)) {
+    fs.mkdirSync(directory);
+  }
+
+  fs.writeFileSync(followerFileUri, followersHeader);
+  fs.writeFileSync(subscriberFileUri, subscribersHeader);
+  fs.writeFileSync(cheererFileUri, cheerersHeader);
+  fs.writeFileSync(raiderFileUri, raidersHeader);
+  fs.writeFileSync(segmentsFileUri, segmentsHeader);
+}
+
+function writeData(dataType, data) {
+  switch (dataType) {
+    case 'follow':
+      fs.appendFileSync(followerFileUri, data);
+      break;
+    case 'subscriber': {
+      fs.appendFileSync(subscriberFileUri, data);
+      break;
+    }
+    case 'cheer':
+      fs.appendFileSync(cheererFileUri, data);
+      break;
+    case 'raid':
+      fs.appendFileSync(raiderFileUri, data);
+      break;
+    case 'mark':
+      fs.appendFileSync(segmentsFileUri, data);
+      break;
+    default:
+      logger.info(`Unsupported event type: ${event.type}`);
+      return false;
+  }
+}
 
 function writeStreamNotes(data) {
   logger.log('Writing streams notes for this session...');
@@ -52,12 +96,12 @@ function writeStreamNotes(data) {
   fs.writeFileSync(fullUri, fileContents);
 }
 
-function initTodaysStreamNotes() {
+function initTodaysStreamNotesOld() {
   let todaysStreamNotesContent = '';
   // 1. read the markdown from the template
   // 2. write that markdown to a new file for today's stream
   const templateContents = fs.readFileSync(fullTemplateUri, {
-    encoding: 'utf8',
+    encoding: 'utf8'
   });
   const temp = md.parseInline(templateContents, {});
   temp[0].children.forEach(token => {
@@ -69,7 +113,7 @@ function initTodaysStreamNotes() {
             DayName: today.format('dddd'),
             Month: today.format('MMMM'),
             Day: today.format('DD'),
-            Year: today.format('YYYY'),
+            Year: today.format('YYYY')
           });
           logger.log(header);
           todaysStreamNotesContent += header;

@@ -4,6 +4,7 @@ const tmi = require('tmi.js');
 const stream = require('./stream');
 const data = require('./data');
 const logger = require('./logger');
+const files = require('./files');
 
 const channels = process.env.TWITCH_CHANNEL.split(',');
 const ttvClientId = process.env.TWITCH_CLIENT_ID;
@@ -12,7 +13,7 @@ let client;
 const commandPrefix = '!mark';
 
 module.exports = {
-  start,
+  start
 };
 
 function start() {
@@ -20,16 +21,16 @@ function start() {
     channels,
     connection: {
       reconnect: true,
-      secure: true,
+      secure: true
     },
     identity: {
       password: ttvClientToken,
-      username: this.clientUsername,
+      username: this.clientUsername
     },
     options: {
       clientId: ttvClientId,
-      debug: true,
-    },
+      debug: true
+    }
   };
 
   client = new tmi.Client(options);
@@ -55,6 +56,12 @@ function ttvChat(channel, user, message) {
     const comment = message.substr(commandPrefix.length).trim();
     const timestamp = stream.getStreamUptime();
     const userName = user['display-name'] || user.username || '';
-    data.addTimestamp(timestamp, comment, userName, stream.streamId);
+    const timeStampData = data.addTimestamp(
+      timestamp,
+      comment,
+      userName,
+      stream.streamId
+    );
+    files.writeData('mark', timeStampData);
   }
 }

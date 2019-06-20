@@ -8,6 +8,8 @@ const chatListener = require('./chat-listener');
 const streamElements = require('./streamelements');
 const logger = require('./logger');
 
+files.initDataNotes();
+
 const captureMarkers = process.env.CAPTURE_MARKERS;
 const runWhileStreaming =
   captureMarkers && captureMarkers.toLowerCase() === 'true';
@@ -35,7 +37,7 @@ if (runWhileStreaming) {
       clearInterval(checkStatusInterval);
       process.exit();
     }
-  }, 10000);
+  }, 100000);
 } else {
   streamElements.setEventsListener(eventsListener);
   streamElements.getRecentActivities().then(completed => {
@@ -44,17 +46,17 @@ if (runWhileStreaming) {
     } else {
       logger.log('The recent activity retrieval did not finish');
     }
-    process.exit();
+    process.exit(1);
   });
 }
 
 process.on('exit', () => {
   logger.log('Exiting the app');
-  process.exit();
+  process.exit(1);
 });
 
 process.on('SIGINT', () => {
   logger.log('Terminating the app');
   // files.writeStreamNotes(sessionData.getAllData());
-  process.exit();
+  process.exit(1);
 });

@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const streamElementsSocket = require('./streamelements');
 const sessionData = require('./data');
+const files = require('./files');
 const logger = require('./logger');
 
 module.exports = {
@@ -9,7 +10,7 @@ module.exports = {
   getSessionData,
   onEvent,
   onEventTest,
-  _testEvent,
+  _testEvent
 };
 
 function start() {
@@ -23,20 +24,21 @@ function getSessionData() {
 
 // https://github.com/StreamElements/widgets/blob/master/CustomCode.md#on-event
 function onEvent(event, _sessionData = sessionData) {
+  let result;
   // Event types to check for can be found here: https://developers.streamelements.com/endpoints/activities
   switch (event.type) {
     case 'follow':
-      _sessionData.addFollower(event.data.username);
+      result = _sessionData.addFollower(event.data.username);
       break;
     case 'subscriber': {
-      determineSubscriberEventType(event, _sessionData);
+      result = determineSubscriberEventType(event, _sessionData);
       break;
     }
     case 'cheer':
-      _sessionData.addCheerer(event.data.username, event.data.amount);
+      result = _sessionData.addCheerer(event.data.username, event.data.amount);
       break;
     case 'raid':
-      _sessionData.addRaider(
+      result = _sessionData.addRaider(
         event.data.username,
         event.data.amount,
         event.data.amount
@@ -47,19 +49,25 @@ function onEvent(event, _sessionData = sessionData) {
       return false;
   }
 
+  files.writeData(event.type, result);
+
   return true;
 }
 
 function determineSubscriberEventType(event, _sessionData = sessionData) {
+  let result;
+
   if (event.data.sender) {
-    _sessionData.addGiftedSubscriber(
+    result = _sessionData.addGiftedSubscriber(
       event.data.username,
       event.data.amount,
       event.data.sender
     );
   } else {
-    _sessionData.addSubscriber(event.data.username, event.data.amount);
+    result = _sessionData.addSubscriber(event.data.username, event.data.amount);
   }
+
+  return result;
 }
 
 function onEventTest(event) {

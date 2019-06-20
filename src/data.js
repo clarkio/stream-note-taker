@@ -23,7 +23,9 @@ function addFollower(username) {
     return;
   }
 
-  followersText += `- [@${username}](https://twitch.tv/${username})\n`;
+  const formattedText = `- [@${username}](https://twitch.tv/${username})\n`;
+  followersText += formattedText;
+  return formattedText;
 }
 
 function addSubscriber(username, months) {
@@ -32,7 +34,9 @@ function addSubscriber(username, months) {
   }
 
   const monthsText = months > 1 ? 'months' : 'month';
-  subscribersText += `- [@${username}](https://twitch.tv/${username}) (${months} ${monthsText})\n`;
+  const formattedText = `- [@${username}](https://twitch.tv/${username}) (${months} ${monthsText})\n`;
+  subscribersText += formattedText;
+  return formattedText;
 }
 
 function addGiftedSubscriber(username, months, gifterUsername) {
@@ -41,7 +45,9 @@ function addGiftedSubscriber(username, months, gifterUsername) {
   }
 
   const monthsText = months > 1 ? 'months' : 'month';
-  subscribersText += `- [@${username}](https://twitch.tv/${username}) (${months} ${monthsText}) \`gifted by\` [@${gifterUsername}](https://twitch.tv/${gifterUsername})\n`;
+  const formattedText = `- [@${username}](https://twitch.tv/${username}) (${months} ${monthsText}) \`gifted by\` [@${gifterUsername}](https://twitch.tv/${gifterUsername})\n`;
+  subscribersText += formattedText;
+  return formattedText;
 }
 
 function addCheerer(username, bits) {
@@ -49,15 +55,18 @@ function addCheerer(username, bits) {
     return;
   }
 
-  cheerersText += `- [@${username}](https://twitch.tv/${username}): ${bits} bits\n`;
+  const formattedText = `- [@${username}](https://twitch.tv/${username}): ${bits} bits\n`;
+  cheerersText += formattedText;
+  return formattedText;
 }
 
 function addRaider(username, raidCount, hostCount) {
   if (!username || !raidCount) {
     return;
   }
-
-  raidersText += `- [@${username}](https://twitch.tv/${username}) (${raidCount})\n`;
+  const formattedText = `- [@${username}](https://twitch.tv/${username}) (${raidCount})\n`;
+  raidersText += formattedText;
+  return formattedText;
 }
 
 function addTimestamp(
@@ -76,12 +85,15 @@ function addTimestamp(
   const timestampLink = `${streamId}?t=${timestamp.hour}h${timestamp.minute}m${
     timestamp.second
   }s`;
+  let formattedText = '';
 
   if (username && username.toLowerCase() !== channel) {
-    timestampsText += `| [${timestampString}](${timestampLink}) | ${comment} created by [@${username}](https://twitch.tv/${username}) |\n`;
+    formattedText = `| [${timestampString}](${timestampLink}) | ${comment} created by [@${username}](https://twitch.tv/${username}) |\n`;
   } else {
-    timestampsText += `| [${timestampString}](${timestampLink}) | ${comment} |\n`;
+    formattedText = `| [${timestampString}](${timestampLink}) | ${comment} |\n`;
   }
+  timestampsText += formattedText;
+  return formattedText;
 }
 
 function getAllData() {
