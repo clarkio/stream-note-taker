@@ -55,6 +55,6 @@ function ttvChat(channel, user, message) {
     const comment = message.substr(commandPrefix.length).trim();
     const timestamp = stream.getStreamUptime();
     const userName = user['display-name'] || user.username || '';
-    data.addTimestamp(timestamp, comment, userName);
+    data.addTimestamp(timestamp, comment, userName, stream.streamId);
   }
 }

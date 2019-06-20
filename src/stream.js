@@ -6,6 +6,7 @@ const logger = require('./logger');
 
 const username = process.env.TWITCH_CHANNEL;
 let isStreamOnline = false;
+let streamId = '';
 let streamStartDateTime;
 
 module.exports = {
@@ -13,6 +14,7 @@ module.exports = {
   isOnline,
   getStreamStatus,
   getStreamUptime,
+  streamId,
 };
 
 getStreamStartTime();
@@ -38,6 +40,8 @@ function getStreamStatus() {
     .then(({ data: response }) => {
       // Destructuring the response wrapped by axios since Twitch API returns response as object with key 'data' as well
       isStreamOnline = response.data.length > 0;
+      // TODO: double check that this id matches up to the recording id post stream
+      streamId = response.data.id;
       return true;
     })
     .catch(error => {
@@ -70,7 +74,21 @@ function getStreamUptime() {
     return;
   }
 
-  return moment
-    .utc(moment.utc() - moment.utc(streamStartDateTime))
-    .format('HH:mm:ss');
+  const difference = moment.utc(moment.utc() - moment.utc(streamStartDateTime));
+  const hour = getStringMeasurement(difference.hours());
+  const minute = getStringMeasurement(difference.minutes());
+  const second = getStringMeasurement(difference.seconds());
+
+  return {
+    hour,
+    minute,
+    second,
+  };
+  // return moment
+  //   .utc(moment.utc() - moment.utc(streamStartDateTime))
+  //   .format('HH:mm:ss');
+}
+
+function getStringMeasurement(duration) {
+  return duration < 10 ? `0${duration}` : duration.toString();
 }

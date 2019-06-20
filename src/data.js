@@ -60,15 +60,27 @@ function addRaider(username, raidCount, hostCount) {
   raidersText += `- [@${username}](https://twitch.tv/${username}) (${raidCount})\n`;
 }
 
-function addTimestamp(timestamp, comment, username) {
+function addTimestamp(
+  timestamp,
+  comment,
+  username,
+  streamId = 'https://www.twitch.tv/videos/id'
+) {
   if (!timestamp) {
     return;
   }
 
+  const timestampString = `${timestamp.hour}:${timestamp.minute}:${
+    timestamp.second
+  }`;
+  const timestampLink = `${streamId}?t=${timestamp.hour}h${timestamp.minute}m${
+    timestamp.second
+  }s`;
+
   if (username && username.toLowerCase() !== channel) {
-    timestampsText += `| ${timestamp} | ${comment} created by [@${username}](https://twitch.tv/${username}) |\n`;
+    timestampsText += `| [${timestampString}](${timestampLink}) | ${comment} created by [@${username}](https://twitch.tv/${username}) |\n`;
   } else {
-    timestampsText += `| ${timestamp} | ${comment} |\n`;
+    timestampsText += `| [${timestampString}](${timestampLink}) | ${comment} |\n`;
   }
 }
 
