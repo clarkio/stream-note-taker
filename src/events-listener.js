@@ -10,7 +10,7 @@ module.exports = {
   getSessionData,
   onEvent,
   onEventTest,
-  _testEvent
+  _testEvent,
 };
 
 function start() {
@@ -24,21 +24,24 @@ function getSessionData() {
 
 // https://github.com/StreamElements/widgets/blob/master/CustomCode.md#on-event
 function onEvent(event, _sessionData = sessionData) {
-  let result;
+  let formattedEventText;
   // Event types to check for can be found here: https://developers.streamelements.com/endpoints/activities
   switch (event.type) {
     case 'follow':
-      result = _sessionData.addFollower(event.data.username);
+      formattedEventText = _sessionData.addFollower(event.data.username);
       break;
     case 'subscriber': {
-      result = determineSubscriberEventType(event, _sessionData);
+      formattedEventText = determineSubscriberEventType(event, _sessionData);
       break;
     }
     case 'cheer':
-      result = _sessionData.addCheerer(event.data.username, event.data.amount);
+      formattedEventText = _sessionData.addCheerer(
+        event.data.username,
+        event.data.amount
+      );
       break;
     case 'raid':
-      result = _sessionData.addRaider(
+      formattedEventText = _sessionData.addRaider(
         event.data.username,
         event.data.amount,
         event.data.amount
@@ -49,7 +52,7 @@ function onEvent(event, _sessionData = sessionData) {
       return false;
   }
 
-  files.writeData(event.type, result);
+  files.writeData(event.type, formattedEventText);
 
   return true;
 }
