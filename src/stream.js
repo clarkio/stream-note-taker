@@ -84,9 +84,6 @@ function getStreamUptime() {
     minute,
     second,
   };
-  // return moment
-  //   .utc(moment.utc() - moment.utc(streamStartDateTime))
-  //   .format('HH:mm:ss');
 }
 
 function getStringMeasurement(duration) {

@@ -23,7 +23,7 @@ function getSessionData() {
 }
 
 // https://github.com/StreamElements/widgets/blob/master/CustomCode.md#on-event
-function onEvent(event, _sessionData = sessionData) {
+function onEvent(event, { _sessionData = sessionData, _files = files } = {}) {
   let formattedEventText;
   // Event types to check for can be found here: https://developers.streamelements.com/endpoints/activities
   switch (event.type) {
@@ -52,7 +52,7 @@ function onEvent(event, _sessionData = sessionData) {
       return false;
   }
 
-  files.writeData(event.type, formattedEventText);
+  _files.writeData(event.type, formattedEventText);
 
   return true;
 }

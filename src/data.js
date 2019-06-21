@@ -11,7 +11,6 @@ module.exports = {
   getAllData
 };
 
-const channel = process.env.TWITCH_CHANNEL.toLowerCase();
 let followersText = '';
 let subscribersText = '';
 let cheerersText = '';
@@ -75,9 +74,15 @@ function addTimestamp(
   username,
   streamId = 'https://www.twitch.tv/videos/id'
 ) {
-  if (!timestamp) {
+  if (
+    !timestamp ||
+    !(timestamp instanceof Object) ||
+    timestamp instanceof Array
+  ) {
     return;
   }
+
+  const channel = process.env.TWITCH_CHANNEL.toLowerCase();
 
   const timestampString = `${timestamp.hour}:${timestamp.minute}:${
     timestamp.second
@@ -88,9 +93,11 @@ function addTimestamp(
   let formattedText = '';
 
   if (username && username.toLowerCase() !== channel) {
-    formattedText = `| [${timestampString}](${timestampLink}) | ${comment} created by [@${username}](https://twitch.tv/${username}) |\n`;
+    formattedText = `| [${timestampString}](${timestampLink}) | ${comment ||
+      ''} created by [@${username}](https://twitch.tv/${username}) |\n`;
   } else {
-    formattedText = `| [${timestampString}](${timestampLink}) | ${comment} |\n`;
+    formattedText = `| [${timestampString}](${timestampLink}) | ${comment ||
+      ''} |\n`;
   }
   timestampsText += formattedText;
   return formattedText;

@@ -290,4 +290,99 @@ describe('Data', function() {
       done();
     });
   });
+
+  describe('Timestamps', function() {
+    it('should do nothing when undefined is provided', function(done) {
+      const result = data.addTimestamp();
+
+      expect(result).to.be.undefined;
+      done();
+    });
+
+    it('should do nothing when string is provided', function(done) {
+      const result = data.addTimestamp('something');
+
+      expect(result).to.be.undefined;
+      done();
+    });
+
+    it('should do nothing when a number is provided', function(done) {
+      const result = data.addTimestamp(100);
+
+      expect(result).to.be.undefined;
+      done();
+    });
+
+    it('should do nothing when an array is provided', function(done) {
+      const result = data.addTimestamp([]);
+
+      expect(result).to.be.undefined;
+      done();
+    });
+
+    it('should add a timestamp without any other details', function(done) {
+      const expectedResult =
+        '| [01:23:10](https://www.twitch.tv/videos/id?t=01h23m10s) |  |\n';
+      const timestamp = { hour: '01', minute: '23', second: '10' };
+
+      const result = data.addTimestamp(timestamp);
+
+      expect(result).to.not.be.undefined;
+      expect(result).to.be.equal(expectedResult);
+      done();
+    });
+
+    it('should add a timestamp with a comment', function(done) {
+      const comment = 'A test comment for this timestamp';
+      const expectedResult = `| [01:23:10](https://www.twitch.tv/videos/id?t=01h23m10s) | ${comment} |\n`;
+      const timestamp = { hour: '01', minute: '23', second: '10' };
+
+      const result = data.addTimestamp(timestamp, comment);
+
+      expect(result).to.not.be.undefined;
+      expect(result).to.be.equal(expectedResult);
+      done();
+    });
+
+    it('should add a timestamp with no comment and a username', function(done) {
+      const username = 'twitch';
+      const expectedResult = `| [01:23:10](https://www.twitch.tv/videos/id?t=01h23m10s) |  created by [@${username}](https://twitch.tv/${username}) |\n`;
+      const timestamp = { hour: '01', minute: '23', second: '10' };
+
+      const result = data.addTimestamp(timestamp, undefined, username);
+
+      expect(result).to.not.be.undefined;
+      expect(result).to.be.equal(expectedResult);
+      done();
+    });
+
+    it('should add a timestamp with no comment and no username when created by channel host', function(done) {
+      process.env.TWITCH_CHANNEL = 'twitch';
+      const username = process.env.TWITCH_CHANNEL;
+      const expectedResult = `| [01:23:10](https://www.twitch.tv/videos/id?t=01h23m10s) |  |\n`;
+      const timestamp = { hour: '01', minute: '23', second: '10' };
+
+      const result = data.addTimestamp(timestamp, undefined, username);
+
+      expect(result).to.not.be.undefined;
+      expect(result).to.be.equal(expectedResult);
+      done();
+    });
+
+    it('should add a timestamp without real values for hour, minute, second', function(done) {
+      const expectedResult =
+        '| [01:23:10](https://www.twitch.tv/videos/id?t=01h23m10s) |  |\n';
+      const timestamp = {
+        hour: undefined,
+        minute: undefined,
+        second: undefined,
+      };
+
+      const result = data.addTimestamp(timestamp);
+
+      expect(result).to.not.be.undefined;
+      expect(result).to.be.equal(expectedResult);
+      done();
+    });
+  });
 });

@@ -57,70 +57,100 @@ describe('Events Listener', function() {
     it('should add follower to session data on follow event', function(done) {
       // Arrange
       const inject = {
-        addFollower: sinon.spy(),
+        _sessionData: {
+          addFollower: sinon.spy(),
+        },
+        _files: {
+          writeData: sinon.spy(),
+        },
       };
 
       // Act
       onEvent(eventsMockData.follow, inject);
 
       // Assert
-      expect(inject.addFollower.calledOnce).to.be.true;
+      expect(inject._sessionData.addFollower.calledOnce).to.be.true;
+      expect(inject._files.writeData.calledOnce).to.be.true;
       done();
     });
 
     it('should add subscriber to session data on subscribe event', function(done) {
       // Arrange
       const inject = {
-        addSubscriber: sinon.spy(),
+        _sessionData: {
+          addSubscriber: sinon.spy(),
+        },
+        _files: {
+          writeData: sinon.spy(),
+        },
       };
 
       // Act
       onEvent(eventsMockData.subscriber, inject);
 
       // Assert
-      expect(inject.addSubscriber.calledOnce).to.be.true;
+      expect(inject._sessionData.addSubscriber.calledOnce).to.be.true;
+      expect(inject._files.writeData.calledOnce).to.be.true;
       done();
     });
 
     it('should add gifted subscriber to session data on gifted subscribe event', function(done) {
       // Arrange
       const inject = {
-        addGiftedSubscriber: sinon.spy(),
+        _sessionData: {
+          addGiftedSubscriber: sinon.spy(),
+        },
+        _files: {
+          writeData: sinon.spy(),
+        },
       };
 
       // Act
       onEvent(eventsMockData.giftedSubscriber, inject);
 
       // Assert
-      expect(inject.addGiftedSubscriber.calledOnce).to.be.true;
+      expect(inject._sessionData.addGiftedSubscriber.calledOnce).to.be.true;
+      expect(inject._files.writeData.calledOnce).to.be.true;
       done();
     });
 
     it('should add cheerer to session data on cheer event', function(done) {
       // Arrange
       const inject = {
-        addCheerer: sinon.spy(),
+        _sessionData: {
+          addCheerer: sinon.spy(),
+        },
+        _files: {
+          writeData: sinon.spy(),
+        },
       };
 
       // Act
       onEvent(eventsMockData.cheer, inject);
 
       // Assert
-      expect(inject.addCheerer.calledOnce).to.be.true;
+      expect(inject._sessionData.addCheerer.calledOnce).to.be.true;
+      expect(inject._files.writeData.calledOnce).to.be.true;
       done();
     });
 
     it('should add raider to session data on raid event', function(done) {
       // Arrange
       const inject = {
-        addRaider: sinon.spy(),
+        _sessionData: {
+          addRaider: sinon.spy(),
+        },
+        _files: {
+          writeData: sinon.spy(),
+        },
       };
 
       // Act
       onEvent(eventsMockData.raid, inject);
 
       // Assert
-      expect(inject.addRaider.calledOnce).to.be.true;
+      expect(inject._sessionData.addRaider.calledOnce).to.be.true;
+      expect(inject._files.writeData.calledOnce).to.be.true;
       done();
     });
   });
