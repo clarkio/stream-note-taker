@@ -82,6 +82,11 @@ function addTimestamp(
     return;
   }
 
+  if (!timestamp.hour || !timestamp.minute || !timestamp.second) {
+    console.warn("The timestamp provided doesn't have sufficient data");
+    return;
+  }
+
   const channel = process.env.TWITCH_CHANNEL.toLowerCase();
 
   const timestampString = `${timestamp.hour}:${timestamp.minute}:${

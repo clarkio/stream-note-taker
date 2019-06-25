@@ -370,18 +370,15 @@ describe('Data', function() {
     });
 
     it('should add a timestamp without real values for hour, minute, second', function(done) {
-      const expectedResult =
-        '| [01:23:10](https://www.twitch.tv/videos/id?t=01h23m10s) |  |\n';
       const timestamp = {
         hour: undefined,
         minute: undefined,
-        second: undefined,
+        second: undefined
       };
 
       const result = data.addTimestamp(timestamp);
 
-      expect(result).to.not.be.undefined;
-      expect(result).to.be.equal(expectedResult);
+      expect(result).to.be.undefined;
       done();
     });
   });
