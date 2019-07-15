@@ -99,7 +99,7 @@ function addTimestamp(
 
   if (username && username.toLowerCase() !== channel) {
     formattedText = `| [${timestampString}](${timestampLink}) | ${comment ||
-      ''} created by [@${username}](https://twitch.tv/${username}) |\n`;
+      ''} (created by [@${username}](https://twitch.tv/${username})) |\n`;
   } else {
     formattedText = `| [${timestampString}](${timestampLink}) | ${comment ||
       ''} |\n`;
