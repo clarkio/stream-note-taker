@@ -8,7 +8,6 @@ const logger = require('./logger');
 
 const md = markdownIt();
 
-// TODO: change this back to use the env variable
 const directory = process.env.WORKING_DIRECTORY;
 const today = moment();
 const todayDate = moment().format('YYYY-MM-DD');
@@ -21,6 +20,7 @@ const followerFileUri = `${tempDataFileBaseUri}followers.md`;
 const subscriberFileUri = `${tempDataFileBaseUri}subscribers.md`;
 const cheererFileUri = `${tempDataFileBaseUri}cheerers.md`;
 const raiderFileUri = `${tempDataFileBaseUri}raiders.md`;
+const modsFileUri = `${tempDataFileBaseUri}moderators.md`;
 const segmentsFileUri = `${tempDataFileBaseUri}segments.md`;
 
 const streamSupportersHeader = `## Today's Stream Supporters\n\n`;
@@ -28,6 +28,7 @@ const followersHeader = '### Followers\n\n';
 const subscribersHeader = '### Subscribers\n\n';
 const cheerersHeader = '### Cheerers\n\n';
 const raidersHeader = '### Raiders/Hosts\n\n';
+const modsHeader = '### Moderators\n\n';
 const segmentsHeader = '## Segments\n\n';
 
 module.exports = {
@@ -46,6 +47,7 @@ function initDataNotes() {
   fs.writeFileSync(subscriberFileUri, subscribersHeader);
   fs.writeFileSync(cheererFileUri, cheerersHeader);
   fs.writeFileSync(raiderFileUri, raidersHeader);
+  fs.writeFileSync(modsFileUri, modsHeader);
   fs.writeFileSync(segmentsFileUri, segmentsHeader);
 }
 
@@ -54,10 +56,9 @@ function writeData(dataType, data) {
     case 'follow':
       fs.appendFileSync(followerFileUri, data);
       break;
-    case 'subscriber': {
+    case 'subscriber':
       fs.appendFileSync(subscriberFileUri, data);
       break;
-    }
     case 'cheer':
       fs.appendFileSync(cheererFileUri, data);
       break;
@@ -67,6 +68,9 @@ function writeData(dataType, data) {
     case 'mark':
       fs.appendFileSync(segmentsFileUri, data);
       break;
+    case 'mod':
+      fs.appendFileSync(modsFileUri, data);
+      break;
     default:
       logger.info(`Unsupported event type: ${event.type}`);
       return false;
@@ -75,7 +79,6 @@ function writeData(dataType, data) {
 
 function writeStreamNotes(data) {
   logger.log('Writing streams notes for this session...');
-  // logger.dir(data);
 
   let fileContents = segmentsHeader;
   fileContents += data.timestamps;
