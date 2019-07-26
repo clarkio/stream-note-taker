@@ -9,6 +9,14 @@
   "rules": {
     "quotes": ["error", "single", { "allowTemplateLiterals": true }],
     "semi": ["error", "always"],
-    "no-use-before-define": "off"
+    "no-use-before-define": "off",
+    "comma-dangle": ["error", "never"],
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "none",
+        "singleQuote": true
+      }
+    ]
   }
 }
