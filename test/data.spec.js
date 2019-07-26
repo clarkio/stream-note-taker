@@ -346,7 +346,7 @@ describe('Data', function() {
 
     it('should add a timestamp with no comment and a username', function(done) {
       const username = 'twitch';
-      const expectedResult = `| [01:23:10](https://www.twitch.tv/videos/id?t=01h23m10s) |  created by [@${username}](https://twitch.tv/${username}) |\n`;
+      const expectedResult = `| [01:23:10](https://www.twitch.tv/videos/id?t=01h23m10s) |  (created by [@${username}](https://twitch.tv/${username})) |\n`;
       const timestamp = { hour: '01', minute: '23', second: '10' };
 
       const result = data.addTimestamp(timestamp, undefined, username);
@@ -379,6 +379,39 @@ describe('Data', function() {
       const result = data.addTimestamp(timestamp);
 
       expect(result).to.be.undefined;
+      done();
+    });
+  });
+
+  describe('Moderators', function() {
+    it('should not add a moderator with undefined username', function(done) {
+      data.addModerator();
+      const moderatorData = data.getAllData().moderators;
+
+      expect(moderatorData).to.be.empty;
+
+      done();
+    });
+
+    it('should not add a moderator with empty string username', function(done) {
+      data.addModerator('');
+      const moderatorData = data.getAllData().moderators;
+
+      expect(moderatorData).to.be.empty;
+
+      done();
+    });
+
+    it('should add a moderator with username clarkio', function(done) {
+      data.addModerator('clarkio');
+      const moderator = data.getAllData().moderators;
+
+      expect(moderator).not.be.empty;
+
+      expect(moderator).to.be.equal(
+        '- [@clarkio](https://twitch.tv/clarkio)\n'
+      );
+
       done();
     });
   });

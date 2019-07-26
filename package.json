@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "debug-brk": "node --inspect-brk src/index.js",
-    "test": "nyc --reporter=html --reporter=text mocha"
+    "test": "nyc --reporter=html --reporter=text mocha",
+    "test:watch": "mocha --watch"
   },
   "repository": {
     "type": "git",
@@ -21,28 +22,28 @@
   "dependencies": {
     "axios": "^0.19.0",
     "dotenv": "^8.0.0",
-    "lodash.template": "^4.4.0",
+    "lodash.template": "^4.5.0",
     "markdown-it": "^8.4.2",
     "moment": "^2.24.0",
     "socket.io-client": "^2.2.0",
-    "tmi.js": "^1.4.2"
+    "tmi.js": "^1.4.5"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
     "chai": "^4.2.0",
     "eslint": "^5.16.0",
-    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-airbnb": "^17.1.1",
     "eslint-config-prettier": "^4.3.0",
     "eslint-config-wesbos": "0.0.19",
     "eslint-plugin-html": "^5.0.5",
-    "eslint-plugin-import": "^2.17.3",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-react": "^7.13.0",
-    "eslint-plugin-react-hooks": "^1.6.0",
+    "eslint-plugin-react": "^7.14.2",
+    "eslint-plugin-react-hooks": "^1.6.1",
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
-    "prettier": "^1.17.1",
+    "prettier": "^1.18.2",
     "sinon": "^7.3.2"
   }
 }

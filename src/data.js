@@ -8,6 +8,7 @@ module.exports = {
   addCheerer,
   addRaider,
   addTimestamp,
+  addModerator,
   getAllData
 };
 
@@ -16,6 +17,7 @@ let subscribersText = '';
 let cheerersText = '';
 let raidersText = '';
 let timestampsText = '| Timestamp | Topic |\n| --------- | ------------ |\n';
+let moderatorsText = '';
 
 function addFollower(username) {
   if (!username) {
@@ -99,12 +101,22 @@ function addTimestamp(
 
   if (username && username.toLowerCase() !== channel) {
     formattedText = `| [${timestampString}](${timestampLink}) | ${comment ||
-      ''} created by [@${username}](https://twitch.tv/${username}) |\n`;
+      ''} (created by [@${username}](https://twitch.tv/${username})) |\n`;
   } else {
     formattedText = `| [${timestampString}](${timestampLink}) | ${comment ||
       ''} |\n`;
   }
   timestampsText += formattedText;
+  return formattedText;
+}
+
+function addModerator(username) {
+  if (!username) {
+    return;
+  }
+
+  const formattedText = `- [@${username}](https://twitch.tv/${username})\n`;
+  moderatorsText += formattedText;
   return formattedText;
 }
 
@@ -114,6 +126,7 @@ function getAllData() {
     subscribers: subscribersText,
     cheerers: cheerersText,
     raiders: raidersText,
-    timestamps: timestampsText
+    timestamps: timestampsText,
+    moderators: moderatorsText
   };
 }

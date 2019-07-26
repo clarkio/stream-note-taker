@@ -10,6 +10,7 @@ const channels = process.env.TWITCH_CHANNEL.split(',');
 const ttvClientId = process.env.TWITCH_CLIENT_ID;
 const ttvClientToken = process.env.TWITCH_CLIENT_TOKEN;
 let client;
+let moderators;
 const commandPrefix = '!mark';
 
 module.exports = {
@@ -41,6 +42,7 @@ function start() {
     .catch(handleTwitchChatConnectionFailure);
 
   client.on('chat', ttvChat);
+  client.on('join', ttvJoin);
 }
 
 function chatListenerStart(args) {
@@ -64,4 +66,27 @@ function ttvChat(channel, user, message) {
     );
     files.writeData('mark', timeStampData);
   }
+}
+
+function ttvJoin(channel, username, self) {
+  if (self) {
+    getModerators();
+  } else {
+    if (moderators.includes(username)) {
+      const moderatorData = data.addModerator(username);
+      files.writeData('mod', moderatorData);
+    }
+  }
+}
+
+function getModerators() {
+  client
+    .mods(channels[0])
+    .then(modsFromTwitch => {
+      moderators = modsFromTwitch;
+    })
+    .catch(error => {
+      logger.error('There was an issue getting moderators for the channel');
+      logger.error(error);
+    });
 }
