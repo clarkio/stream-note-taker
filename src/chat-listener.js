@@ -7,10 +7,10 @@ const logger = require('./logger');
 const files = require('./files');
 
 const channels = process.env.TWITCH_CHANNEL.split(',');
-const ttvClientId = process.env.TWITCH_CLIENT_ID;
+const ttvUsername = process.env.TWITCH_USERNAME;
 const ttvClientToken = process.env.TWITCH_CLIENT_TOKEN;
 let client;
-let moderators;
+let moderators = [];
 const commandPrefix = '!mark';
 
 module.exports = {
@@ -26,10 +26,9 @@ function start() {
     },
     identity: {
       password: ttvClientToken,
-      username: this.clientUsername
+      username: ttvUsername
     },
     options: {
-      clientId: ttvClientId,
       debug: true
     }
   };
@@ -38,15 +37,16 @@ function start() {
 
   client
     .connect()
+    .then(getModerators)
     .then(chatListenerStart)
     .catch(handleTwitchChatConnectionFailure);
-
-  client.on('chat', ttvChat);
-  client.on('join', ttvJoin);
 }
 
 function chatListenerStart(args) {
   logger.log('Connected successfully to Twitch Chat');
+
+  client.on('chat', ttvChat);
+  client.on('join', ttvJoin);
 }
 
 function handleTwitchChatConnectionFailure(error) {
@@ -69,24 +69,21 @@ function ttvChat(channel, user, message) {
 }
 
 function ttvJoin(channel, username, self) {
-  if (self) {
-    getModerators();
-  } else {
-    if (moderators.includes(username)) {
-      const moderatorData = data.addModerator(username);
-      files.writeData('mod', moderatorData);
-    }
+  if (moderators.length > 0 && moderators.includes(username)) {
+    const moderatorData = data.addModerator(username);
+    files.writeData('mod', moderatorData);
   }
 }
 
 function getModerators() {
-  client
+  // Defaults to first channel from environment variable TWITCH_CHANNEL
+  return client
     .mods(channels[0])
     .then(modsFromTwitch => {
       moderators = modsFromTwitch;
     })
     .catch(error => {
       logger.error('There was an issue getting moderators for the channel');
-      logger.error(error);
+      logger.dir(error);
     });
 }

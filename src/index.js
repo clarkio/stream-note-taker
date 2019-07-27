@@ -24,9 +24,10 @@ if (runWhileStreaming) {
 
   // Wait 10 seconds after start up to see if the stream is online
   // Continue to check until offline using the interval
+  logger.log('Starting interval to check stream status (online/offline)...');
   const checkStatusInterval = setInterval(() => {
     if (!stream.isOnline()) {
-      logger.log('Stream is now offline');
+      logger.log('Stream is offline');
       const dataToWrite = sessionData.getAllData();
       if (dataToWrite && dataToWrite.followers !== '') {
         files.writeStreamNotes(sessionData.getAllData());
@@ -36,9 +37,14 @@ if (runWhileStreaming) {
       clearInterval(monitorInterval);
       clearInterval(checkStatusInterval);
       process.exit();
+    } else {
+      logger.log(
+        'Stream is still online so continuing the check status interval...'
+      );
     }
   }, 100000);
 } else {
+  logger.log('Offline so capturing data from recent stream session...');
   streamElements.setEventsListener(eventsListener);
   streamElements.getRecentActivities().then(completed => {
     if (completed) {
@@ -56,7 +62,11 @@ process.on('exit', () => {
 });
 
 process.on('SIGINT', () => {
-  logger.log('Terminating the app');
-  // files.writeStreamNotes(sessionData.getAllData());
+  logger.log('Terminating the app from SIGINT');
   process.exit(1);
+});
+
+process.on('uncaughtException', error => {
+  logger.log('Something went wrong with the app');
+  logger.error(error);
 });
