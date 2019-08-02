@@ -383,6 +383,32 @@ describe('Data', function() {
     });
   });
 
+  describe('Notes', function() {
+    it('should not add a note if a comment is not provided', function() {
+      data.addNote();
+      const noteData = data.getAllData().notes;
+
+      expect(noteData).to.be.empty;
+    });
+
+    it('should add a note if a username is not provided', function() {
+      const note = 'This is a note for testing purposes';
+      data.addNote(note);
+      const noteData = data.getAllData().notes;
+
+      expect(noteData).to.be.equal(` - ${note}\n`);
+    });
+
+    it('should add a note if a username is provided and include the username', function() {
+      const note = 'Tests are the best';
+      const username = 'boki996';
+      data.addNote(note, username);
+      const noteData = data.getAllData().notes;
+
+      expect(noteData).to.include(username);
+    });
+  });
+
   describe('Moderators', function() {
     it('should not add a moderator with undefined username', function(done) {
       data.addModerator();

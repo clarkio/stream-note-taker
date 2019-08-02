@@ -9,6 +9,7 @@ module.exports = {
   addRaider,
   addTimestamp,
   addModerator,
+  addNote,
   getAllData
 };
 
@@ -18,6 +19,7 @@ let cheerersText = '';
 let raidersText = '';
 let timestampsText = '| Timestamp | Topic |\n| --------- | ------------ |\n';
 let moderatorsText = '';
+let notesText = '';
 
 function addFollower(username) {
   if (!username) {
@@ -85,7 +87,7 @@ function addTimestamp(
   }
 
   if (!timestamp.hour || !timestamp.minute || !timestamp.second) {
-    console.warn("The timestamp provided doesn't have sufficient data");
+    console.warn('The timestamp provided doesn\'t have sufficient data');
     return;
   }
 
@@ -110,6 +112,22 @@ function addTimestamp(
   return formattedText;
 }
 
+function addNote(note, username) {
+  if(!note) {
+    return;
+  }
+
+  let formattedData;
+  if(username) {
+    formattedData = ` - ${note} (added by [@${username}](https://twitch.tv/${username}))\n`;
+  } else {
+    formattedData = ` - ${note}\n`;
+  }
+
+  notesText += formattedData;
+  return formattedData;
+}
+
 function addModerator(username) {
   if (!username) {
     return;
@@ -127,6 +145,7 @@ function getAllData() {
     cheerers: cheerersText,
     raiders: raidersText,
     timestamps: timestampsText,
+    notes: notesText,
     moderators: moderatorsText
   };
 }

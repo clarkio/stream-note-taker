@@ -11,7 +11,8 @@ const ttvUsername = process.env.TWITCH_USERNAME;
 const ttvClientToken = process.env.TWITCH_CLIENT_TOKEN;
 let client;
 let moderators = [];
-const commandPrefix = '!mark';
+const markCommandPrefix = '!mark';
+const noteCommandPrefix = '!note';
 
 module.exports = {
   start
@@ -54,8 +55,8 @@ function handleTwitchChatConnectionFailure(error) {
 }
 
 function ttvChat(channel, user, message) {
-  if (message.startsWith(commandPrefix)) {
-    const comment = message.substr(commandPrefix.length).trim();
+  if (message.startsWith(markCommandPrefix)) {
+    const comment = message.substr(markCommandPrefix.length).trim();
     const timestamp = stream.getStreamUptime();
     const userName = user['display-name'] || user.username || '';
     const timeStampData = data.addTimestamp(
@@ -65,6 +66,22 @@ function ttvChat(channel, user, message) {
       stream.streamId
     );
     files.writeData('mark', timeStampData);
+  }
+
+  if (message.startsWith(noteCommandPrefix)) {
+    const comment = message.substr(noteCommandPrefix.length).trim();
+    const timestamp = stream.getStreamUptime();
+    const userName = user['display-name'] || user.username || '';
+    const timeStampData = data.addTimestamp(
+      timestamp,
+      comment,
+      userName,
+      stream.streamId
+    );
+    files.writeData('mark', timeStampData);
+
+    const noteData = data.addNote();
+    files.writeData('note', noteData);
   }
 }
 
