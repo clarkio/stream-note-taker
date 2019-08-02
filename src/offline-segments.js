@@ -18,7 +18,7 @@ function getStringMeasurement(duration) {
 function getCreatedBy(username) {
   return username.toLowerCase() === 'clarkio'
     ? ''
-    : `(created by [${username}](https://twitch.tv/${username}))`;
+    : `(created by [@${username}](https://twitch.tv/${username}))`;
 }
 
 data.forEach(item => {
