@@ -1,7 +1,7 @@
 /** ************************************* */
 
 // Run the following and change end time as well as the video id as needed
-// npx twitch-chatlog --end=04:04:38 -r -p 441227491 | grep '!mark' > chat.json
+// npx twitch-chatlog --end=04:04:38 -r -p 441227491 > chat.json
 // Then run this script to generate the timestamp marker table for stream notes markdown
 
 /** ************************************* */
@@ -10,6 +10,8 @@ const moment = require('moment');
 
 // update the filename here if you export to a different file using the twitch-chatlog tool
 const data = require('../chat.json');
+
+const COMMAND_TEXT = '!mark';
 
 function getStringMeasurement(duration) {
   return duration < 10 ? `0${duration}` : duration.toString();
@@ -22,7 +24,7 @@ function getCreatedBy(username) {
 }
 
 data.forEach(item => {
-  if (item.message.body.includes('!mark')) {
+  if (item.message.body.includes(COMMAND_TEXT)) {
     const timestamp = moment('2019-01-01')
       .startOf('day')
       .seconds(item.content_offset_seconds);
@@ -31,7 +33,7 @@ data.forEach(item => {
     const minute = getStringMeasurement(timestamp.minutes());
     const second = getStringMeasurement(timestamp.seconds());
     const username = item.commenter.display_name;
-    const message = item.message.body.substr('!mark'.length).trim();
+    const message = item.message.body.substr(COMMAND_TEXT.length).trim();
 
     const mark = `| [${timestampString}](?t=${hour}h${minute}m${second}s) | ${message} ${getCreatedBy(
       username

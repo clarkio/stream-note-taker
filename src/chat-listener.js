@@ -63,6 +63,7 @@ function ttvChat(channel, user, message) {
       timestamp,
       comment,
       userName,
+      'mark',
       stream.streamId
     );
     files.writeData('mark', timeStampData);
@@ -72,16 +73,22 @@ function ttvChat(channel, user, message) {
     const comment = message.substr(noteCommandPrefix.length).trim();
     const timestamp = stream.getStreamUptime();
     const userName = user['display-name'] || user.username || '';
+
     const timeStampData = data.addTimestamp(
       timestamp,
       comment,
       userName,
+      'note',
       stream.streamId
     );
-    files.writeData('mark', timeStampData);
+    if (timeStampData) {
+      files.writeData('mark', timeStampData);
+    }
 
-    const noteData = data.addNote();
-    files.writeData('note', noteData);
+    const noteData = data.addNote(comment, userName);
+    if (noteData) {
+      files.writeData('note', noteData);
+    }
   }
 }
 
