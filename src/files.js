@@ -21,6 +21,7 @@ const subscriberFileUri = `${tempDataFileBaseUri}subscribers.md`;
 const cheererFileUri = `${tempDataFileBaseUri}cheerers.md`;
 const raiderFileUri = `${tempDataFileBaseUri}raiders.md`;
 const modsFileUri = `${tempDataFileBaseUri}moderators.md`;
+const notesFileUri = `${tempDataFileBaseUri}notes.md`;
 const segmentsFileUri = `${tempDataFileBaseUri}segments.md`;
 
 const streamSupportersHeader = `## Today's Stream Supporters\n\n`;
@@ -29,6 +30,7 @@ const subscribersHeader = '### Subscribers\n\n';
 const cheerersHeader = '### Cheerers\n\n';
 const raidersHeader = '### Raiders/Hosts\n\n';
 const modsHeader = '### Moderators\n\n';
+const notesHeader = '### Notes\n\n';
 const segmentsHeader =
   '## Segments\n\n| Timestamp | Topic |\n| --------- | ------------ |\n';
 
@@ -36,7 +38,7 @@ module.exports = {
   initTodaysStreamNotes: initTodaysStreamNotesOld,
   initDataNotes,
   writeStreamNotes,
-  writeData,
+  writeData
 };
 
 function initDataNotes() {
@@ -49,6 +51,7 @@ function initDataNotes() {
   fs.writeFileSync(cheererFileUri, cheerersHeader);
   fs.writeFileSync(raiderFileUri, raidersHeader);
   fs.writeFileSync(modsFileUri, modsHeader);
+  fs.writeFileSync(notesFileUri, notesHeader);
   fs.writeFileSync(segmentsFileUri, segmentsHeader);
 }
 
@@ -71,6 +74,9 @@ function writeData(dataType, data) {
       break;
     case 'mod':
       fs.appendFileSync(modsFileUri, data);
+      break;
+    case 'note':
+      fs.appendFileSync(notesFileUri, data);
       break;
     default:
       logger.info(`Unsupported event type: ${dataType}`);
@@ -105,7 +111,7 @@ function initTodaysStreamNotesOld() {
   // 1. read the markdown from the template
   // 2. write that markdown to a new file for today's stream
   const templateContents = fs.readFileSync(fullTemplateUri, {
-    encoding: 'utf8',
+    encoding: 'utf8'
   });
   const temp = md.parseInline(templateContents, {});
   temp[0].children.forEach(token => {
@@ -117,7 +123,7 @@ function initTodaysStreamNotesOld() {
             DayName: today.format('dddd'),
             Month: today.format('MMMM'),
             Day: today.format('DD'),
-            Year: today.format('YYYY'),
+            Year: today.format('YYYY')
           });
           logger.log(header);
           todaysStreamNotesContent += header;
