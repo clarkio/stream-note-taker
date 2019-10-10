@@ -76,6 +76,7 @@ function addTimestamp(
   timestamp,
   comment,
   username,
+  type,
   streamId = 'https://www.twitch.tv/videos/id'
 ) {
   if (
@@ -92,7 +93,7 @@ function addTimestamp(
   }
 
   const channel = process.env.TWITCH_CHANNEL.toLowerCase();
-
+  const styleText = type && type.toLowerCase() === 'mark' ? '**' : '';
   const timestampString = `${timestamp.hour}:${timestamp.minute}:${
     timestamp.second
   }`;
@@ -102,11 +103,11 @@ function addTimestamp(
   let formattedText = '';
 
   if (username && username.toLowerCase() !== channel) {
-    formattedText = `| [${timestampString}](${timestampLink}) | ${comment ||
-      ''} (created by [@${username}](https://twitch.tv/${username})) |\n`;
+    formattedText = `| [${timestampString}](${timestampLink}) | ${styleText}${comment ||
+      ''} (created by [@${username}](https://twitch.tv/${username}))${styleText} |\n`;
   } else {
-    formattedText = `| [${timestampString}](${timestampLink}) | ${comment ||
-      ''} |\n`;
+    formattedText = `| [${timestampString}](${timestampLink}) | ${styleText}${comment ||
+      ''}${styleText} |\n`;
   }
   timestampsText += formattedText;
   return formattedText;
@@ -117,8 +118,9 @@ function addNote(note, username) {
     return;
   }
 
+  const channel = process.env.TWITCH_CHANNEL.toLowerCase();
   let formattedData;
-  if(username) {
+  if(username && username.toLowerCase() !== channel) {
     formattedData = ` - ${note} (added by [@${username}](https://twitch.tv/${username}))\n`;
   } else {
     formattedData = ` - ${note}\n`;
