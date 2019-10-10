@@ -11,6 +11,8 @@ const moment = require('moment');
 // update the filename here if you export to a different file using the twitch-chatlog tool
 const data = require('../chat.json');
 
+const chatCommand = '!mark';
+
 function getStringMeasurement(duration) {
   return duration < 10 ? `0${duration}` : duration.toString();
 }
@@ -22,7 +24,7 @@ function getCreatedBy(username) {
 }
 
 data.forEach(item => {
-  if (item.message.body.includes('!mark')) {
+  if (item.message.body.includes(chatCommand)) {
     const timestamp = moment('2019-01-01')
       .startOf('day')
       .seconds(item.content_offset_seconds);
@@ -31,13 +33,16 @@ data.forEach(item => {
     const minute = getStringMeasurement(timestamp.minutes());
     const second = getStringMeasurement(timestamp.seconds());
     const username = item.commenter.display_name;
-    const message = item.message.body.substr('!mark'.length).trim();
+    const message = item.message.body.substr(chatCommand.length).trim();
 
-    const mark = `| [${timestampString}](?t=${hour}h${minute}m${second}s) | ${message} ${getCreatedBy(
+    const segment = `| [${timestampString}](?t=${hour}h${minute}m${second}s) | **${message} ${getCreatedBy(
       username
-    )} |\n`;
-    console.log(mark);
+    )}** |\n`;
+    console.log(segment);
 
-    fs.appendFileSync(`./segments-${moment().format('YYYY-MM-DD')}.md`, mark);
+    fs.appendFileSync(
+      `./segments-${moment().format('YYYY-MM-DD')}.md`,
+      segment
+    );
   }
 });
