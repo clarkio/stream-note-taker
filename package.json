@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node src/index.js",
     "debug-brk": "node --inspect-brk src/index.js",
     "test": "nyc --reporter=html --reporter=text mocha",
     "test:watch": "mocha --watch"
