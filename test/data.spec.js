@@ -4,9 +4,11 @@ const { expect } = require('chai');
 
 const data = require('../src/data');
 
-describe('Data', function() {
-  describe('Sanity Checks', function() {
-    it('should return empty strings for all data at start', function(done) {
+process.env.TWITCH_CHANNEL = 'testChannel';
+
+describe('Data', function () {
+  describe('Sanity Checks', function () {
+    it('should return empty strings for all data at start', function (done) {
       const streamData = data.getAllData();
 
       expect(streamData).to.not.be.undefined;
@@ -20,8 +22,8 @@ describe('Data', function() {
     });
   });
 
-  describe('Followers', function() {
-    it('should not add a follower with undefined username', function(done) {
+  describe('Followers', function () {
+    it('should not add a follower with undefined username', function (done) {
       data.addFollower();
       const followerData = data.getAllData().followers;
 
@@ -30,7 +32,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should not add a follower with empty string username', function(done) {
+    it('should not add a follower with empty string username', function (done) {
       data.addFollower('');
       const followerData = data.getAllData().followers;
 
@@ -39,7 +41,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should add a follower with username clarkio', function(done) {
+    it('should add a follower with username clarkio', function (done) {
       data.addFollower('clarkio');
       const followerData = data.getAllData().followers;
 
@@ -53,8 +55,8 @@ describe('Data', function() {
     });
   });
 
-  describe('Subscribers', function() {
-    it('should not add a subscriber with undefined username', function(done) {
+  describe('Subscribers', function () {
+    it('should not add a subscriber with undefined username', function (done) {
       data.addSubscriber();
       const subscriberData = data.getAllData().subscribers;
 
@@ -63,7 +65,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should not add a subscriber with empty string username', function(done) {
+    it('should not add a subscriber with empty string username', function (done) {
       data.addSubscriber('');
       const subscriberData = data.getAllData().subscribers;
 
@@ -72,7 +74,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should not add a subscriber with undefined months', function(done) {
+    it('should not add a subscriber with undefined months', function (done) {
       data.addSubscriber('clarkio');
       const subscriberData = data.getAllData().subscribers;
 
@@ -81,7 +83,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should add a subscriber with username clarkio with singular month', function(done) {
+    it('should add a subscriber with username clarkio with singular month', function (done) {
       data.addSubscriber('clarkio', 1);
       const subscriberData = data.getAllData().subscribers;
 
@@ -94,7 +96,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should add a subscriber with username clarkiobot with plural months', function(done) {
+    it('should add a subscriber with username clarkiobot with plural months', function (done) {
       data.addSubscriber('clarkiobot', 2);
       const subscriberData = data.getAllData().subscribers;
 
@@ -108,8 +110,8 @@ describe('Data', function() {
     });
   });
 
-  describe('Gifted Subscribers', function() {
-    it('should not add a gifted subscriber with undefined username', function(done) {
+  describe('Gifted Subscribers', function () {
+    it('should not add a gifted subscriber with undefined username', function (done) {
       data.addGiftedSubscriber();
       const giftedSubscriberData = data.getAllData().subscribers;
 
@@ -120,7 +122,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should not add a gifted subscriber with empty string username', function(done) {
+    it('should not add a gifted subscriber with empty string username', function (done) {
       data.addGiftedSubscriber('');
       const giftedSubscriberData = data.getAllData().subscribers;
 
@@ -131,7 +133,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should not add a gifted subscriber with undefined months', function(done) {
+    it('should not add a gifted subscriber with undefined months', function (done) {
       data.addGiftedSubscriber('clarkio');
       const giftedSubscriberData = data.getAllData().subscribers;
 
@@ -142,7 +144,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should not add a gifted subscriber with undefined gifterUsername', function(done) {
+    it('should not add a gifted subscriber with undefined gifterUsername', function (done) {
       data.addGiftedSubscriber('clarkio', 1);
       const giftedSubscriberData = data.getAllData().subscribers;
 
@@ -153,7 +155,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should not add a gifted subscriber with empty string gifterUsername', function(done) {
+    it('should not add a gifted subscriber with empty string gifterUsername', function (done) {
       data.addGiftedSubscriber('clarkio', 1, '');
       const giftedSubscriberData = data.getAllData().subscribers;
 
@@ -164,7 +166,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should add a gifted subscriber with username clarkio with singular month', function(done) {
+    it('should add a gifted subscriber with username clarkio with singular month', function (done) {
       data.addGiftedSubscriber('clarkio', 1, 'bestgifter');
       const giftedSubscriberData = data.getAllData().subscribers;
 
@@ -177,7 +179,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should add a gifted subscriber with username clarkiobot with plural months', function(done) {
+    it('should add a gifted subscriber with username clarkiobot with plural months', function (done) {
       data.addGiftedSubscriber('clarkiobot', 2, 'bestgifter');
       const giftedSubscriberData = data.getAllData().subscribers;
 
@@ -191,8 +193,8 @@ describe('Data', function() {
     });
   });
 
-  describe('Cheerers', function() {
-    it('should not add a cheerer with undefined username', function(done) {
+  describe('Cheerers', function () {
+    it('should not add a cheerer with undefined username', function (done) {
       data.addCheerer();
       const cheererData = data.getAllData().cheerers;
 
@@ -201,7 +203,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should not add a cheerer with empty string username', function(done) {
+    it('should not add a cheerer with empty string username', function (done) {
       data.addCheerer('');
       const cheererData = data.getAllData().cheerers;
 
@@ -210,7 +212,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should not add a cheerer with undefined bits', function(done) {
+    it('should not add a cheerer with undefined bits', function (done) {
       data.addCheerer('clarkio');
       const cheererData = data.getAllData().cheerers;
 
@@ -219,7 +221,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should not add a cheerer with empty string bits', function(done) {
+    it('should not add a cheerer with empty string bits', function (done) {
       data.addCheerer('clarkio', '');
       const cheererData = data.getAllData().cheerers;
 
@@ -228,7 +230,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should add a cheerer with username clarkio', function(done) {
+    it('should add a cheerer with username clarkio', function (done) {
       data.addCheerer('clarkio', 100);
       const cheererData = data.getAllData().cheerers;
 
@@ -242,8 +244,8 @@ describe('Data', function() {
     });
   });
 
-  describe('Raiders', function() {
-    it('should not add a raider with undefined username', function(done) {
+  describe('Raiders', function () {
+    it('should not add a raider with undefined username', function (done) {
       data.addRaider();
       const raiderData = data.getAllData().raiders;
 
@@ -252,7 +254,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should not add a raider with empty string username', function(done) {
+    it('should not add a raider with empty string username', function (done) {
       data.addRaider('');
       const raiderData = data.getAllData().raiders;
 
@@ -261,7 +263,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should not add a raider with undefined raid count', function(done) {
+    it('should not add a raider with undefined raid count', function (done) {
       data.addRaider('clarkio');
       const raiderData = data.getAllData().raiders;
 
@@ -270,7 +272,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should not add a raider with empty string raid count', function(done) {
+    it('should not add a raider with empty string raid count', function (done) {
       data.addRaider('clarkio', '');
       const raiderData = data.getAllData().raiders;
 
@@ -279,7 +281,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should add a raider with valid arguments', function(done) {
+    it('should add a raider with valid arguments', function (done) {
       data.addRaider('clarkio', 10);
       const raiderData = data.getAllData().raiders;
 
@@ -291,36 +293,36 @@ describe('Data', function() {
     });
   });
 
-  describe('Timestamps', function() {
-    it('should do nothing when undefined is provided', function(done) {
+  describe('Timestamps', function () {
+    it('should do nothing when undefined is provided', function (done) {
       const result = data.addTimestamp();
 
       expect(result).to.be.undefined;
       done();
     });
 
-    it('should do nothing when string is provided', function(done) {
+    it('should do nothing when string is provided', function (done) {
       const result = data.addTimestamp('something');
 
       expect(result).to.be.undefined;
       done();
     });
 
-    it('should do nothing when a number is provided', function(done) {
+    it('should do nothing when a number is provided', function (done) {
       const result = data.addTimestamp(100);
 
       expect(result).to.be.undefined;
       done();
     });
 
-    it('should do nothing when an array is provided', function(done) {
+    it('should do nothing when an array is provided', function (done) {
       const result = data.addTimestamp([]);
 
       expect(result).to.be.undefined;
       done();
     });
 
-    it('should add a timestamp without any other details', function(done) {
+    it('should add a timestamp without any other details', function (done) {
       const expectedResult =
         '| [01:23:10](https://www.twitch.tv/videos/id?t=01h23m10s) |  |\n';
       const timestamp = { hour: '01', minute: '23', second: '10' };
@@ -332,7 +334,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should add a timestamp with a comment', function(done) {
+    it('should add a timestamp with a comment', function (done) {
       const comment = 'A test comment for this timestamp';
       const expectedResult = `| [01:23:10](https://www.twitch.tv/videos/id?t=01h23m10s) | ${comment} |\n`;
       const timestamp = { hour: '01', minute: '23', second: '10' };
@@ -344,7 +346,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should add a timestamp with no comment and a username', function(done) {
+    it('should add a timestamp with no comment and a username', function (done) {
       const username = 'twitch';
       const expectedResult = `| [01:23:10](https://www.twitch.tv/videos/id?t=01h23m10s) |  (created by [@${username}](https://twitch.tv/${username})) |\n`;
       const timestamp = { hour: '01', minute: '23', second: '10' };
@@ -356,7 +358,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should add a timestamp with no comment and no username when created by channel host', function(done) {
+    it('should add a timestamp with no comment and no username when created by channel host', function (done) {
       process.env.TWITCH_CHANNEL = 'twitch';
       const username = process.env.TWITCH_CHANNEL;
       const expectedResult = `| [01:23:10](https://www.twitch.tv/videos/id?t=01h23m10s) |  |\n`;
@@ -369,7 +371,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should add a timestamp without real values for hour, minute, second', function(done) {
+    it('should add a timestamp without real values for hour, minute, second', function (done) {
       const timestamp = {
         hour: undefined,
         minute: undefined,
@@ -383,15 +385,15 @@ describe('Data', function() {
     });
   });
 
-  describe('Notes', function() {
-    it('should not add a note if a comment is not provided', function() {
+  describe('Notes', function () {
+    it('should not add a note if a comment is not provided', function () {
       data.addNote();
       const noteData = data.getAllData().notes;
 
       expect(noteData).to.be.empty;
     });
 
-    it('should add a note if a username is not provided', function() {
+    it('should add a note if a username is not provided', function () {
       const note = 'This is a note for testing purposes';
       data.addNote(note);
       const noteData = data.getAllData().notes;
@@ -399,7 +401,7 @@ describe('Data', function() {
       expect(noteData).to.be.equal(` - ${note}\n`);
     });
 
-    it('should add a note if a username is provided and include the username', function() {
+    it('should add a note if a username is provided and include the username', function () {
       const note = 'Tests are the best';
       const username = 'boki996';
       data.addNote(note, username);
@@ -409,8 +411,8 @@ describe('Data', function() {
     });
   });
 
-  describe('Moderators', function() {
-    it('should not add a moderator with undefined username', function(done) {
+  describe('Moderators', function () {
+    it('should not add a moderator with undefined username', function (done) {
       data.addModerator();
       const moderatorData = data.getAllData().moderators;
 
@@ -419,7 +421,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should not add a moderator with empty string username', function(done) {
+    it('should not add a moderator with empty string username', function (done) {
       data.addModerator('');
       const moderatorData = data.getAllData().moderators;
 
@@ -428,7 +430,7 @@ describe('Data', function() {
       done();
     });
 
-    it('should add a moderator with username clarkio', function(done) {
+    it('should add a moderator with username clarkio', function (done) {
       data.addModerator('clarkio');
       const moderator = data.getAllData().moderators;
 
