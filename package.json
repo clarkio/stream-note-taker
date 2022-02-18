@@ -27,7 +27,7 @@
     "markdown-it": "^8.4.2",
     "moment": "^2.24.0",
     "socket.io-client": "^2.2.0",
-    "tmi.js": "^1.7.0"
+    "tmi.js": "^1.8.0"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
