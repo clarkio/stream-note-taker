@@ -24,13 +24,12 @@
     "axios": "^0.21.3",
     "dotenv": "^8.0.0",
     "lodash.template": "^4.5.0",
-    "markdown-it": "^8.4.2",
+    "markdown-it": "^13.0.0",
     "moment": "^2.29.1",
     "socket.io-client": "^2.2.0",
     "tmi.js": "^1.8.5"
   },
   "devDependencies": {
-    "babel-eslint": "^9.0.0",
     "chai": "^4.2.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",
