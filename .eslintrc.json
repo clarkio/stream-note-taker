@@ -4,8 +4,10 @@
     "es6": true,
     "mocha": true
   },
-  "extends": "wesbos",
-  "parserOptions": {},
+  "extends": [
+    "airbnb",
+    "prettier"
+  ],
   "rules": {
     "quotes": ["error", "single", { "allowTemplateLiterals": true }],
     "semi": ["error", "always"],
