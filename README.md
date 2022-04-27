@@ -1,5 +1,5 @@
 <div align="center">
-  
+
 # stream-note-taker
 
 [![Known Vulnerabilities](https://snyk.io/test/github/clarkio/stream-note-taker/badge.svg)](https://snyk.io/test/github/clarkio/stream-note-taker)
@@ -12,6 +12,15 @@
 </div>
 
 A tool that will help record stream events and notes while live streaming
+
+- Commands to use in chat:
+    - `!mark`: used to create "chapters" for events that occurred on stream. This outputs to a file called `segments.md` and in a table format. This can be used as chapters within the description of YouTube recordings for the stream
+
+        Example format: `| 00:00:00  | Kick it off |`
+
+    - `!note`: used to create a note of something that happened or was learned during the stream. This outputs to a file called `notes.md`.
+
+        Example format:  `- this is a note (added by [@clarkio](https://twitch.tv/clarkio))\n`
 
 ## Clarkio
 This game was built with 💙 live on stream with the programming community. Come and hang out with us over on Twitch!
@@ -37,7 +46,7 @@ Fill in the following fields in your new `.env` file:
 - TWITCH_CLIENT_TOKEN=
 - SE_ACCOUNT_ID=
 - SE_TOKEN=
-  
+
 If you don't have values for these go to the [Setup](#Setup) section of this document
 
 ### Quick Start
