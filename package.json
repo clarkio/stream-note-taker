@@ -23,7 +23,7 @@
   "dependencies": {
     "axios": "^0.21.3",
     "dotenv": "^8.0.0",
-    "lodash.template": "^4.5.0",
+    "lodash": "^4.17.21",
     "markdown-it": "^13.0.0",
     "moment": "^2.29.1",
     "socket.io-client": "^2.2.0",

@@ -1,7 +1,7 @@
 require('dotenv').config();
 const fs = require('fs');
 const moment = require('moment');
-const _template = require('lodash.template');
+const _template = require('lodash/template');
 const markdownIt = require('markdown-it');
 
 const logger = require('./logger');
