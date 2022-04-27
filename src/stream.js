@@ -47,7 +47,7 @@ function getStreamStatus() {
       streamId = response.data[0].id;
       return true;
     })
-    .catch(error => {
+    .catch((error) => {
       logger.error(error);
       isStreamOnline = false;
       return false;
@@ -64,7 +64,7 @@ function getStreamStartTime() {
         streamStartDateTime = response.data[0].started_at;
       }
     })
-    .catch(error => {
+    .catch((error) => {
       logger.error('Failed to retrieve stream start time', error);
     });
 }
@@ -74,7 +74,7 @@ function getStreamUptime() {
     logger.log(
       'Stream Start Date/Time has not been recorded and therefore we cannot calculate uptime'
     );
-    return;
+    return {};
   }
 
   const difference = moment.utc(moment.utc() - moment.utc(streamStartDateTime));

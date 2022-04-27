@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 require('dotenv').config();
 const tmi = require('tmi.js');
 
@@ -43,7 +44,7 @@ function start() {
     .catch(handleTwitchChatConnectionFailure);
 }
 
-function chatListenerStart(args) {
+function chatListenerStart(_args) {
   logger.log('Connected successfully to Twitch Chat');
 
   client.on('chat', ttvChat);
@@ -54,7 +55,7 @@ function handleTwitchChatConnectionFailure(error) {
   logger.error(error);
 }
 
-function ttvChat(channel, user, message) {
+function ttvChat(_channel, user, message) {
   if (message.startsWith(markCommandPrefix)) {
     const comment = message.substr(markCommandPrefix.length).trim();
     const timestamp = stream.getStreamUptime();
@@ -92,7 +93,7 @@ function ttvChat(channel, user, message) {
   }
 }
 
-function ttvJoin(channel, username, self) {
+function ttvJoin(_channel, username, _self) {
   if (moderators.length > 0 && moderators.includes(username)) {
     const moderatorData = data.addModerator(username);
     files.writeData('mod', moderatorData);
@@ -103,10 +104,10 @@ function getModerators() {
   // Defaults to first channel from environment variable TWITCH_CHANNEL
   return client
     .mods(channels[0])
-    .then(modsFromTwitch => {
+    .then((modsFromTwitch) => {
       moderators = modsFromTwitch;
     })
-    .catch(error => {
+    .catch((error) => {
       logger.error('There was an issue getting moderators for the channel');
       logger.dir(error);
     });

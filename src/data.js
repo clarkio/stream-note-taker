@@ -10,7 +10,7 @@ module.exports = {
   addTimestamp,
   addModerator,
   addNote,
-  getAllData
+  getAllData,
 };
 
 let followersText = '';
@@ -23,7 +23,7 @@ let notesText = '';
 
 function addFollower(username) {
   if (!username) {
-    return;
+    return 'ERROR: Missing Username';
   }
 
   const formattedText = `- [@${username}](https://twitch.tv/${username})\n`;
@@ -33,7 +33,7 @@ function addFollower(username) {
 
 function addSubscriber(username, months) {
   if (!username || !months) {
-    return;
+    return 'ERROR: Missing Username or Months';
   }
 
   const monthsText = months > 1 ? 'months' : 'month';
@@ -44,7 +44,7 @@ function addSubscriber(username, months) {
 
 function addGiftedSubscriber(username, months, gifterUsername) {
   if (!username || !months || !gifterUsername) {
-    return;
+    return 'ERROR: Missing Username, Months or Gifter Username';
   }
 
   const monthsText = months > 1 ? 'months' : 'month';
@@ -55,7 +55,7 @@ function addGiftedSubscriber(username, months, gifterUsername) {
 
 function addCheerer(username, bits) {
   if (!username || !bits) {
-    return;
+    return 'ERROR: Missing Username or Bits';
   }
 
   const formattedText = `- [@${username}](https://twitch.tv/${username}): ${bits} bits\n`;
@@ -63,9 +63,10 @@ function addCheerer(username, bits) {
   return formattedText;
 }
 
+// eslint-disable-next-line no-unused-vars
 function addRaider(username, raidCount, hostCount) {
   if (!username || !raidCount) {
-    return;
+    return 'ERROR: Missing Username or Raid Count';
   }
   const formattedText = `- [@${username}](https://twitch.tv/${username}) (${raidCount})\n`;
   raidersText += formattedText;
@@ -84,43 +85,42 @@ function addTimestamp(
     !(timestamp instanceof Object) ||
     timestamp instanceof Array
   ) {
-    return;
+    return ' ERROR: Missing Valid Timestamp';
   }
 
   if (!timestamp.hour || !timestamp.minute || !timestamp.second) {
-    console.warn('The timestamp provided doesn\'t have sufficient data');
-    return;
+    const message = 'The timestamp provided doesn\'t have sufficient data';
+    console.warn(message);
+    return message;
   }
 
   const channel = process.env.TWITCH_CHANNEL.toLowerCase();
   const styleText = type && type.toLowerCase() === 'mark' ? '**' : '';
-  const timestampString = `${timestamp.hour}:${timestamp.minute}:${
-    timestamp.second
-  }`;
-  const timestampLink = `${streamId}?t=${timestamp.hour}h${timestamp.minute}m${
-    timestamp.second
-  }s`;
+  const timestampString = `${timestamp.hour}:${timestamp.minute}:${timestamp.second}`;
+  const timestampLink = `${streamId}?t=${timestamp.hour}h${timestamp.minute}m${timestamp.second}s`;
   let formattedText = '';
 
   if (username && username.toLowerCase() !== channel) {
-    formattedText = `| [${timestampString}](${timestampLink}) | ${styleText}${comment ||
-      ''} (created by [@${username}](https://twitch.tv/${username}))${styleText} |\n`;
+    formattedText = `| [${timestampString}](${timestampLink}) | ${styleText}${
+      comment || ''
+    } (created by [@${username}](https://twitch.tv/${username}))${styleText} |\n`;
   } else {
-    formattedText = `| [${timestampString}](${timestampLink}) | ${styleText}${comment ||
-      ''}${styleText} |\n`;
+    formattedText = `| [${timestampString}](${timestampLink}) | ${styleText}${
+      comment || ''
+    }${styleText} |\n`;
   }
   timestampsText += formattedText;
   return formattedText;
 }
 
 function addNote(note, username) {
-  if(!note) {
-    return;
+  if (!note) {
+    return 'ERROR: Missing Note';
   }
 
   const channel = process.env.TWITCH_CHANNEL.toLowerCase();
   let formattedData;
-  if(username && username.toLowerCase() !== channel) {
+  if (username && username.toLowerCase() !== channel) {
     formattedData = ` - ${note} (added by [@${username}](https://twitch.tv/${username}))\n`;
   } else {
     formattedData = ` - ${note}\n`;
@@ -132,7 +132,7 @@ function addNote(note, username) {
 
 function addModerator(username) {
   if (!username) {
-    return;
+    return 'ERROR: Missing Username';
   }
 
   const formattedText = `- [@${username}](https://twitch.tv/${username})\n`;
@@ -148,6 +148,6 @@ function getAllData() {
     raiders: raidersText,
     timestamps: timestampsText,
     notes: notesText,
-    moderators: moderatorsText
+    moderators: moderatorsText,
   };
 }

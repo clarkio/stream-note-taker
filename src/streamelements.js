@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 require('dotenv').config();
 const io = require('socket.io-client');
 const axios = require('axios');
@@ -15,13 +16,13 @@ module.exports = {
   disconnect,
   _testEvent,
   getRecentActivities,
-  setEventsListener,
+  setEventsListener
 };
 
 function connect(listener) {
   eventsListener = listener;
   socket = io('https://realtime.streamelements.com', {
-    transports: ['websocket'],
+    transports: ['websocket']
   });
 
   socket.on('connect', _onConnect);
@@ -50,11 +51,11 @@ async function getRecentActivities() {
   // 3. Add activities to data
   try {
     let {
-      data: { lastReset },
+      data: { lastReset }
     } = await axios.get(
       `https://api.streamelements.com/kappa/v2/sessions/${accountId}`,
       {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: { Authorization: `Bearer ${accessToken}` }
       }
     );
     lastReset = lastReset.replace(/T.*Z/, 'T00:00:00.000Z');
@@ -62,11 +63,11 @@ async function getRecentActivities() {
     const { data: recentData } = await axios.get(
       `https://api.streamelements.com/kappa/v2/activities/${accountId}?after=${lastReset}&types=follow&types=subscriber&types=cheer&types=host&types=raid&minsub=0&mincheer=0&minhost=0&limit=300`,
       {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: { Authorization: `Bearer ${accessToken}` }
       }
     );
 
-    recentData.forEach(activity => {
+    recentData.forEach((activity) => {
       eventsListener.onEvent(activity);
     });
 

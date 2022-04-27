@@ -46,14 +46,17 @@ if (runWhileStreaming) {
 } else {
   logger.log('Offline so capturing data from recent stream session...');
   streamElements.setEventsListener(eventsListener);
-  streamElements.getRecentActivities().then(completed => {
-    if (completed) {
-      files.writeStreamNotes(sessionData.getAllData());
-    } else {
-      logger.log('The recent activity retrieval did not finish');
-    }
-    process.exit(1);
-  });
+  streamElements
+    .getRecentActivities()
+    .then((completed) => {
+      if (completed) {
+        files.writeStreamNotes(sessionData.getAllData());
+      } else {
+        logger.log('The recent activity retrieval did not finish');
+      }
+      process.exit(1);
+    })
+    .catch((error) => console.error(error));
 }
 
 process.on('exit', () => {
@@ -66,7 +69,7 @@ process.on('SIGINT', () => {
   process.exit(1);
 });
 
-process.on('uncaughtException', error => {
+process.on('uncaughtException', (error) => {
   logger.log('Something went wrong with the app');
   logger.error(error);
 });

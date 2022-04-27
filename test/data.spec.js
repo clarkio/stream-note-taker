@@ -1,3 +1,6 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable func-names */
 /* eslint-disable global-require */
 /* eslint-disable no-unused-expressions */
 const { expect } = require('chai');
@@ -297,28 +300,28 @@ describe('Data', function () {
     it('should do nothing when undefined is provided', function (done) {
       const result = data.addTimestamp();
 
-      expect(result).to.be.undefined;
+      expect(result).to.equal(' ERROR: Missing Valid Timestamp');
       done();
     });
 
     it('should do nothing when string is provided', function (done) {
       const result = data.addTimestamp('something');
 
-      expect(result).to.be.undefined;
+      expect(result).to.equal(' ERROR: Missing Valid Timestamp');
       done();
     });
 
     it('should do nothing when a number is provided', function (done) {
       const result = data.addTimestamp(100);
 
-      expect(result).to.be.undefined;
+      expect(result).to.equal(' ERROR: Missing Valid Timestamp');
       done();
     });
 
     it('should do nothing when an array is provided', function (done) {
       const result = data.addTimestamp([]);
 
-      expect(result).to.be.undefined;
+      expect(result).to.equal(' ERROR: Missing Valid Timestamp');
       done();
     });
 
@@ -375,12 +378,14 @@ describe('Data', function () {
       const timestamp = {
         hour: undefined,
         minute: undefined,
-        second: undefined
+        second: undefined,
       };
 
       const result = data.addTimestamp(timestamp);
 
-      expect(result).to.be.undefined;
+      expect(result).to.equal(
+        'The timestamp provided doesn\'t have sufficient data'
+      );
       done();
     });
   });

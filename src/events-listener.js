@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 require('dotenv').config();
 
 const streamElementsSocket = require('./streamelements');
@@ -10,7 +11,7 @@ module.exports = {
   getSessionData,
   onEvent,
   onEventTest,
-  _testEvent,
+  _testEvent
 };
 
 function start() {

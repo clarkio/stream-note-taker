@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 module.exports = {
   info(...args) {
     console.info(...args);
@@ -10,5 +11,5 @@ module.exports = {
   },
   error(...args) {
     console.error(...args);
-  },
+  }
 };
