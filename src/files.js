@@ -1,7 +1,7 @@
 require('dotenv').config();
 const fs = require('fs');
 const moment = require('moment');
-const _template = require('lodash/template');
+const _ = require('lodash');
 const markdownIt = require('markdown-it');
 
 const logger = require('./logger');
@@ -82,6 +82,8 @@ function writeData(dataType, data) {
       logger.info(`Unsupported event type: ${dataType}`);
       return false;
   }
+
+  return true;
 }
 
 function writeStreamNotes(data) {
@@ -114,11 +116,11 @@ function initTodaysStreamNotesOld() {
     encoding: 'utf8'
   });
   const temp = md.parseInline(templateContents, {});
-  temp[0].children.forEach(token => {
+  temp[0].children.forEach((token) => {
     switch (token.type) {
       case 'text': {
         if (token.content.includes('Stream Notes')) {
-          const compiled = _template(token.content);
+          const compiled = _.template(token.content);
           const header = compiled({
             DayName: today.format('dddd'),
             Month: today.format('MMMM'),
